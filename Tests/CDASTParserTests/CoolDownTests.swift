@@ -1,5 +1,5 @@
 import XCTest
-@testable import CoolDown
+@testable import CDASTParser
 
 final class CoolDownTests: XCTestCase {
     func testExample() {
