@@ -8,10 +8,11 @@
 
 public enum ASTNode: Equatable {
 
-    case header(nodes: [ASTNode]) // depth? e.g. # and ###
+    case header(depth: Int, nodes: [ASTNode])
     case paragraph(nodes: [ASTNode])
+    case list(nodes: [ASTNode])
     case bullet(nodes: [ASTNode])
-    case list(nodes: [ASTNode]) // how to save number e.g "23."?
+    case numbered(index: Int, nodes: [ASTNode])
     case quote(nodes: [ASTNode])
     
     case text(_ content: String)
@@ -25,8 +26,10 @@ public enum ASTNode: Equatable {
 
     public static func == (lhs: ASTNode, rhs: ASTNode) -> Bool {
         switch (lhs, rhs) {
-        case let (.header(lhsNodes), .header(rhsNodes)),
-             let (.paragraph(lhsNodes), .paragraph(rhsNodes)),
+        case let (.header(lhsInt, lhsNodes), .header(rhsInt, rhsNodes)),
+             let (.numbered(lhsInt, lhsNodes), .header(rhsInt, rhsNodes)):
+            return lhsInt == rhsInt && lhsNodes == rhsNodes
+        case let (.paragraph(lhsNodes), .paragraph(rhsNodes)),
              let (.bullet(lhsNodes), .bullet(rhsNodes)),
              let (.list(lhsNodes), .list(rhsNodes)),
              let (.quote(lhsNodes), .quote(rhsNodes)):

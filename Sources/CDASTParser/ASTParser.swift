@@ -25,7 +25,7 @@ class ASTParser {
                 // Token is an header
                 let trimmedToken = line[token.index(line.startIndex, offsetBy: 2)...]
 
-                result.append(.header(nodes: parseTextToNodes(text: String(trimmedToken))))
+                result.append(.header(depth: 1, nodes: parseTextToNodes(text: String(trimmedToken))))
             } else {
                 result.append(.paragraph(nodes: parseTextToNodes(text: String(line))))
             }

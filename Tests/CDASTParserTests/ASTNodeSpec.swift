@@ -17,10 +17,11 @@ class ASTNodeSpec: QuickSpec {
             describe("Equatable") {
 
                 let allCases: [ASTNode] = [
-                    .header(nodes: []),
+                    .header(depth: 0, nodes: []),
                     .paragraph(nodes: []),
-                    .bullet(nodes: []),
                     .list(nodes: []),
+                    .bullet(nodes: []),
+                    .numbered(index: 0, nodes: []),
                     .quote(nodes: []),
                     .text(""),
                     .bold(""),
@@ -40,16 +41,16 @@ class ASTNodeSpec: QuickSpec {
 
                     context("no nodes") {
                         it("should be equal truthy") {
-                            expect(ASTNode.header(nodes: []) == ASTNode.header(nodes: [])).to(beTrue())
+                            expect(ASTNode.header(depth: 0, nodes: []) == ASTNode.header(depth: 0, nodes: [])).to(beTrue())
                         }
                     }
 
                     context("different node count") {
                         it("should not be equal") {
-                            expect(ASTNode.header(nodes: [
+                            expect(ASTNode.header(depth: 0, nodes: [
                                 .text("A")
-                            ]) == ASTNode.header(nodes: [])).to(beFalse())
-                            expect(ASTNode.header(nodes: []) == ASTNode.header(nodes: [
+                            ]) == ASTNode.header(depth: 0, nodes: [])).to(beFalse())
+                            expect(ASTNode.header(depth: 0, nodes: []) == ASTNode.header(depth: 0, nodes: [
                                 .text("A")
                             ])).to(beFalse())
                         }
@@ -57,9 +58,9 @@ class ASTNodeSpec: QuickSpec {
 
                     context("different nodes") {
                         it("should not be equal") {
-                            expect(ASTNode.header(nodes: [
+                            expect(ASTNode.header(depth: 0, nodes: [
                                 .text("A")
-                            ]) == ASTNode.header(nodes: [
+                            ]) == ASTNode.header(depth: 0, nodes: [
                                 .text("B")
                             ])).to(beFalse())
                         }
@@ -67,10 +68,10 @@ class ASTNodeSpec: QuickSpec {
                     context("equal nodes") {
                         context("different order") {
                             it("should not be equal if elements equal but differ in order") {
-                                expect(ASTNode.header(nodes: [
+                                expect(ASTNode.header(depth: 0, nodes: [
                                     .text("A"),
                                     .text("B")
-                                ]) == ASTNode.header(nodes: [
+                                ]) == ASTNode.header(depth: 0, nodes: [
                                     .text("B"),
                                     .text("A")
                                 ])).to(beFalse())
@@ -79,10 +80,10 @@ class ASTNodeSpec: QuickSpec {
 
                         context("same order") {
                             it("should be equal truthy") {
-                                expect(ASTNode.header(nodes: [
+                                expect(ASTNode.header(depth: 0, nodes: [
                                     .text("A"),
                                     .text("B")
-                                ]) == ASTNode.header(nodes: [
+                                ]) == ASTNode.header(depth: 0, nodes: [
                                     .text("A"),
                                     .text("B")
                                 ])).to(beTrue())
@@ -138,6 +139,63 @@ class ASTNodeSpec: QuickSpec {
                                     .text("A"),
                                     .text("B")
                                 ]) == ASTNode.paragraph(nodes: [
+                                    .text("A"),
+                                    .text("B")
+                                ])).to(beTrue())
+                            }
+                        }
+                    }
+                }
+                
+                describe("Numbered") {
+
+                    context("no nodes") {
+                        it("should be equal truthy") {
+                            expect(ASTNode.numbered(index: 0, nodes: []) == ASTNode.numbered(index: 0, nodes: [])).to(beTrue())
+                        }
+                    }
+
+                    context("different node count") {
+                        it("should not be equal") {
+                            expect(ASTNode.numbered(index: 0, nodes: [
+                                .text("A")
+                            ]) == ASTNode.numbered(index: 0, nodes: [])).to(beFalse())
+                            expect(ASTNode.numbered(index: 0, nodes: []) == ASTNode.numbered(index: 0, nodes: [
+                                .text("A")
+                            ])).to(beFalse())
+                        }
+                    }
+
+                    context("different nodes") {
+                        it("should not be equal") {
+                            expect(ASTNode.numbered(index: 0, nodes: [
+                                .text("A")
+                            ]) == ASTNode.numbered(index: 0, nodes: [
+                                .text("B")
+                            ])).to(beFalse())
+                        }
+                    }
+                    
+                    context("equal nodes") {
+                        context("different order") {
+                            it("should not be equal if elements equal but differ in order") {
+                                expect(ASTNode.numbered(index: 0, nodes: [
+                                    .text("A"),
+                                    .text("B")
+                                ]) == ASTNode.numbered(index: 0, nodes: [
+                                    .text("B"),
+                                    .text("A")
+                                ])).to(beFalse())
+                                    
+                            }
+                        }
+
+                        context("same order") {
+                            it("should be equal truthy") {
+                                expect(ASTNode.numbered(index: 0, nodes: [
+                                    .text("A"),
+                                    .text("B")
+                                ]) == ASTNode.numbered(index: 0, nodes: [
                                     .text("A"),
                                     .text("B")
                                 ])).to(beTrue())
