@@ -6,8 +6,6 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
-import Stencil
-
 enum FragmentType {
     case header
     case paragraph

@@ -6,6 +6,8 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
+import Foundation
+
 /// A Lexer is used to iterate the so/called lexems, tokens in a string, basically an iterator.
 class Lexer: IteratorProtocol {
 
