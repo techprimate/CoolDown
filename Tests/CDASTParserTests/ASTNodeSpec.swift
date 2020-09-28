@@ -17,15 +17,17 @@ class ASTNodeSpec: QuickSpec {
             describe("Equatable") {
 
                 let allCases: [ASTNode] = [
-                    .header(depth: 0, nodes: []),
+                    .header(depth: -1, nodes: []),
                     .paragraph(nodes: []),
                     .list(nodes: []),
                     .bullet(nodes: []),
-                    .numbered(index: 0, nodes: []),
+                    .numbered(index: -1, nodes: []),
                     .quote(nodes: []),
+                    .codeBlock(nodes: []),
                     .text(""),
                     .bold(""),
                     .cursive(""),
+                    .cursiveBold(""),
                     .code("")
                 ]
 
@@ -372,6 +374,61 @@ class ASTNodeSpec: QuickSpec {
                     }
                 }
 
+                describe("Code Block") {
+
+                    context("no nodes") {
+                        it("should be equal truthy") {
+                            expect(ASTNode.codeBlock(nodes: []) == ASTNode.codeBlock(nodes: [])).to(beTrue())
+                        }
+                    }
+
+                    context("different node count") {
+                        it("should not be equal") {
+                            expect(ASTNode.codeBlock(nodes: [
+                                .text("A")
+                            ]) == ASTNode.codeBlock(nodes: [])).to(beFalse())
+                            expect(ASTNode.codeBlock(nodes: []) == ASTNode.codeBlock(nodes: [
+                                .text("A")
+                            ])).to(beFalse())
+                        }
+                    }
+
+                    context("different nodes") {
+                        it("should not be equal") {
+                            expect(ASTNode.codeBlock(nodes: [
+                                .text("A")
+                            ]) == ASTNode.codeBlock(nodes: [
+                                .text("B")
+                            ])).to(beFalse())
+                        }
+                    }
+                    context("equal nodes") {
+                        context("different order") {
+                            it("should not be equal if elements equal but differ in order") {
+                                expect(ASTNode.codeBlock(nodes: [
+                                    .text("A"),
+                                    .text("B")
+                                ]) == ASTNode.codeBlock(nodes: [
+                                    .text("B"),
+                                    .text("A")
+                                ])).to(beFalse())
+                            }
+                        }
+
+                        context("same order") {
+                            it("should be equal truthy") {
+                                expect(ASTNode.codeBlock(nodes: [
+                                    .text("A"),
+                                    .text("B")
+                                ]) == ASTNode.codeBlock(nodes: [
+                                    .text("A"),
+                                    .text("B")
+                                ])).to(beTrue())
+                            }
+                        }
+                    }
+                }
+
                 describe("Text") {
                     context("empty content strings") {
                         it("should be equal") {
@@ -431,7 +488,27 @@ class ASTNodeSpec: QuickSpec {
                         }
                     }
                 }
-                
+
+                describe("CursiveBold") {
+                    context("empty content strings") {
+                        it("should be equal") {
+                            expect(ASTNode.cursiveBold("") == ASTNode.cursiveBold("")).to(beTrue())
+                        }
+                    }
+
+                    context("equal content strings") {
+                        it("should be equal") {
+                            expect(ASTNode.cursiveBold("A") == ASTNode.cursiveBold("A")).to(beTrue())
+                        }
+                    }
+
+                    context("different content strings") {
+                        it("should not be equal") {
+                            expect(ASTNode.cursiveBold("A") == ASTNode.cursiveBold("B")).to(beFalse())
+                        }
+                    }
+                }
+
                 describe("Code") {
                     context("empty content strings") {
                         it("should be equal") {

@@ -16,8 +16,8 @@ class CoolDown {
             return
         }
         let parser = ASTParser(lexer: lexer)
-        while let token = lexer.next() {
-            parser.parse(token: token)
+        while let block = lexer.next() {
+            parser.parse(block: block)
         }
         nodes = parser.result
     }

@@ -171,6 +171,53 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CoolDown(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
+
+                for i in 0..<4 {
+                    context("\(i) leading spaces") {
+                        it("should ignore leading spaces") {
+                            // based on https://spec.commonmark.org/0.29/#example-38
+                            let text = Array(repeating: " ", count: i).joined() + "# foo"
+                            let expectedNodes: [ASTNode] = [.header(depth: 1, nodes: [.text("foo")])]
+                            expect(CoolDown(text).nodes) == expectedNodes
+                        }
+                    }
+                }
+
+                context("4 leading spaces") {
+                    it("should not parse as a header") {
+                        // based on https://spec.commonmark.org/0.29/#example-39
+                        let text = "    # foo"
+                        let expectedNodes: [ASTNode] = [.code("# foo")]
+                        expect(CoolDown(text).nodes) == expectedNodes
+                    }
+                }
+
+                context("no space between # and content") {
+
+                    it("should not parse headers") {
+                        // based on https://spec.commonmark.org/0.29/#example-34
+                        let text = """
+                        #5 bolt
+
+                        #hashtag
+
+                        ##two hashtags
+
+                        ###three hashtags
+
+                        ####four hashtags
+                        """
+                        let expectedNodes: [ASTNode] = [
+                            .paragraph(nodes: [.text("#5 bolt")]),
+                            .paragraph(nodes: [.text("#hashtag")]),
+                            .paragraph(nodes: [.text("##two hashtags")]),
+                            .paragraph(nodes: [.text("###three hashtags")]),
+                            .paragraph(nodes: [.text("####four hashtags")])
+                        ]
+
+                        expect(CoolDown(text).nodes) == expectedNodes
+                    }
+                }
             }
 
             describe("Paragraph") {
