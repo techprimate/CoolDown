@@ -74,9 +74,8 @@ class ASTParser {
     }
 
     func appendNodesAsParagraph(nodes: [ASTNode], result: inout [ASTNode]) {
-        if let paragraphNode = result.last,
-           case ASTNode.paragraph(let previousNodes) = paragraphNode {
-            result[result.count - 1] = .paragraph(nodes: previousNodes + nodes)
+        if let paragraphNode = result.last as? ParagraphNode {
+            paragraphNode.nodes += nodes
         } else {
             result.append(.paragraph(nodes: nodes))
         }

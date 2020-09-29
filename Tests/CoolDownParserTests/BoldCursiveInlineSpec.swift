@@ -17,39 +17,43 @@ class BoldCursiveInlineSpec: QuickSpec {
             describe("cursive inline") {
                 it("should be parsed") {
                     let text = "*foo*"
+                    let actualNodes = CoolDown(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [.cursive("foo")])
                     ]
 
-                    expect(CoolDown(text).nodes) == expectedNodes
+                    expect(actualNodes) == expectedNodes
                 }
             }
 
             describe("bold inline") {
                 it("should be parsed") {
                     let text = "**foo**"
+                    let actualNodes = CoolDown(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [.bold("foo")])
                     ]
 
-                    expect(CoolDown(text).nodes) == expectedNodes
+                    expect(actualNodes) == expectedNodes
                 }
             }
 
             describe("bold & cursive inline") {
                 it("should be parsed") {
                     let text = "***foo***"
+                    let actualNodes = CoolDown(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [.cursiveBold("foo")])
                     ]
 
-                    expect(CoolDown(text).nodes) == expectedNodes
+                    expect(actualNodes) == expectedNodes
                 }
             }
 
             context("bold in cursive") {
                 it("should return both elements") {
                     let text = "***bold** in cursive*"
+                    let actualNodes = CoolDown(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .cursiveBold("bold"),
@@ -57,13 +61,14 @@ class BoldCursiveInlineSpec: QuickSpec {
                         ])
                     ]
 
-                    expect(CoolDown(text).nodes) == expectedNodes
+                    expect(actualNodes) == expectedNodes
                 }
             }
 
             context("cursive in bold") {
                 it("should return both elements") {
                     let text = "***cursive* in bold**"
+                    let actualNodes = CoolDown(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .cursiveBold("cursive"),
@@ -71,13 +76,14 @@ class BoldCursiveInlineSpec: QuickSpec {
                         ])
                     ]
 
-                    expect(CoolDown(text).nodes) == expectedNodes
+                    expect(actualNodes) == expectedNodes
                 }
             }
 
             context("in bold cursive") {
                 it("should return both elements") {
                     let text = "**in bold *cursive***"
+                    let actualNodes = CoolDown(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .bold("in bold "),
@@ -85,13 +91,14 @@ class BoldCursiveInlineSpec: QuickSpec {
                         ])
                     ]
 
-                    expect(CoolDown(text).nodes) == expectedNodes
+                    expect(actualNodes) == expectedNodes
                 }
             }
 
             context("in cursive bold") {
                 it("should return both elements") {
                     let text = "**in bold *cursive***"
+                    let actualNodes = CoolDown(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .cursive("in cursive "),
@@ -99,7 +106,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                         ])
                     ]
 
-                    expect(CoolDown(text).nodes) == expectedNodes
+                    expect(actualNodes) == expectedNodes
                 }
             }
         }

@@ -20,10 +20,6 @@ public typealias View = NSView
 
 public typealias Resolver = (ASTNode) -> View
 
-public enum CDUIMapperError: Error {
-    case missingResolver(node: ASTNode)
-}
-
 public class CDUIMapper {
 
     // MARK: - Properties
@@ -47,24 +43,7 @@ public class CDUIMapper {
 
     // MARK: - Modifiers
 
-    func addResolver(for nodeType: String, resolver: @escaping Resolver) {
-        resolvers[nodeType] = resolver
-    }
-}
-
-class NodeMapper {
-
-    static func map(node: ASTNode, resolvers: [String: Resolver]) throws -> View {
-        let resolver: Resolver?
-        switch node {
-        case .text:
-            resolver = resolvers["text"]
-        default:
-            resolver = nil
-        }
-        guard let res = resolver else {
-            throw CDUIMapperError.missingResolver(node: node)
-        }
-        return res(node)
+    func addResolver<Node: ASTNode>(for nodeType: Node.Type, resolver: @escaping Resolver) {
+        resolvers[String(describing: nodeType)] = resolver
     }
 }

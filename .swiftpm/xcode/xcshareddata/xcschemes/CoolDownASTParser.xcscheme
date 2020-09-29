@@ -71,13 +71,12 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDASTParserTests"
-               BuildableName = "CDASTParserTests"
-               BlueprintName = "CDASTParserTests"
+               BlueprintIdentifier = "CoolDownParserTests"
+               BuildableName = "CoolDownParserTests"
+               BlueprintName = "CoolDownParserTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

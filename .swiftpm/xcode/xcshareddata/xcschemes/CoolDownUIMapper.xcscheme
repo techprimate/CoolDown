@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDUIMapperTests"
-               BuildableName = "CDUIMapperTests"
-               BlueprintName = "CDUIMapperTests"
+               BlueprintIdentifier = "CoolDownUIMapperTests"
+               BuildableName = "CoolDownUIMapperTests"
+               BlueprintName = "CoolDownUIMapperTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

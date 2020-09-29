@@ -20,7 +20,7 @@ public class CDAttributedString {
     // MARK: - Properties
 
     private let nodes: [ASTNode]
-    private var modifiers: [NodeKind: Modifier] = [:]
+    private var modifiers: [String: Modifier] = [:]
 
     // MARK: - Initializer
 
@@ -38,36 +38,7 @@ public class CDAttributedString {
 
     // MARK: - Modifiers
 
-    func addModifier(for kind: NodeKind, modifier: @escaping Modifier) {
-        modifiers[kind] = modifier
-    }
-}
-
-public enum NodeKind {
-    case header
-    case paragraph
-    case list
-    case bullet
-    case numbered
-    case quote
-    case codeBlock
-
-    case bold
-    case cursive
-    case cursiveBold
-
-    case code
-    case text
-}
-
-class NodeMapper {
-
-    static func map(node: ASTNode, modifiers: [NodeKind: Modifier]) -> NSAttributedString {
-        switch node {
-        case .text(let content):
-            return NSAttributedString(string: content, attributes: modifiers[.text]?())
-        default:
-            return NSAttributedString()
-        }
+    func addModifier<Node: ASTNode>(for kind: Node.Type, modifier: @escaping Modifier) {
+        modifiers[String(describing: kind)] = modifier
     }
 }

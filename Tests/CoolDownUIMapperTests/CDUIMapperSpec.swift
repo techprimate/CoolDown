@@ -46,7 +46,7 @@ class CDUIMapperSpec: QuickSpec {
 
                     let view = View()
                     let mapper = CDUIMapper(from: nodes)
-                    mapper.addResolver(for: "text") { node -> View in
+                    mapper.addResolver(for: TextNode.self) { node -> View in
                         view
                     }
                     do {
