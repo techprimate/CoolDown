@@ -144,36 +144,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDASTParserTests"
-               BuildableName = "CDASTParserTests"
-               BlueprintName = "CDASTParserTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDAttributedStringTests"
-               BuildableName = "CDAttributedStringTests"
-               BlueprintName = "CDAttributedStringTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDUIMapperTests"
-               BuildableName = "CDUIMapperTests"
-               BlueprintName = "CDUIMapperTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CoolDownAttributedStringTests"
                BuildableName = "CoolDownAttributedStringTests"
                BlueprintName = "CoolDownAttributedStringTests"

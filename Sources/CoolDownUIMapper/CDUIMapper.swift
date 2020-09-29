@@ -6,7 +6,7 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
-import CDASTParser
+import CoolDownParser
 #if canImport(UIKit)
 import UIKit
 
@@ -39,7 +39,7 @@ public class CDUIMapper {
 
     // MARK: - Accessors
 
-    func resolve() throws -> [UIView] {
+    func resolve() throws -> [View] {
         try nodes.map { node in
             try NodeMapper.map(node: node, resolvers: resolvers)
         }

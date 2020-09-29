@@ -14,8 +14,8 @@ import UIKit
 import AppKit
 #endif
 
-import CDASTParser
-@testable import CDUIMapper
+import CoolDownParser
+@testable import CoolDownUIMapper
 
 class CDUIMapperSpec: QuickSpec {
 
@@ -44,7 +44,7 @@ class CDUIMapperSpec: QuickSpec {
                         .text("foo")
                     ]
 
-                    let view = UIView()
+                    let view = View()
                     let mapper = CDUIMapper(from: nodes)
                     mapper.addResolver(for: "text") { node -> View in
                         view

@@ -8,7 +8,7 @@
 
 import Quick
 import Nimble
-@testable import CDASTParser
+@testable import CoolDownParser
 
 class BoldCursiveInlineSpec: QuickSpec {
 
