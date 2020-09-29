@@ -7,7 +7,6 @@
 
 import Quick
 import Nimble
-
 #if canImport(UIKit)
 import UIKit
 
@@ -17,9 +16,8 @@ import AppKit
 
 typealias Color = NSColor
 #endif
-
-import CDASTParser
-@testable import CDAttributedString
+import CoolDownParser
+@testable import CoolDownAttributedString
 
 class CDAttributedStringSpec: QuickSpec {
 

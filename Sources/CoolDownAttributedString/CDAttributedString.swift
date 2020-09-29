@@ -6,7 +6,7 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
-import CDASTParser
+import CoolDownParser
 #if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)

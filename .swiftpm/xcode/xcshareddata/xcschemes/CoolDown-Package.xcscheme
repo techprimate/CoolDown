@@ -118,6 +118,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CoolDownParser"
+               BuildableName = "CoolDownParser"
+               BlueprintName = "CoolDownParser"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -153,6 +167,36 @@
                BlueprintIdentifier = "CDUIMapperTests"
                BuildableName = "CDUIMapperTests"
                BlueprintName = "CDUIMapperTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CoolDownAttributedStringTests"
+               BuildableName = "CoolDownAttributedStringTests"
+               BlueprintName = "CoolDownAttributedStringTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CoolDownParserTests"
+               BuildableName = "CoolDownParserTests"
+               BlueprintName = "CoolDownParserTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CoolDownUIMapperTests"
+               BuildableName = "CoolDownUIMapperTests"
+               BlueprintName = "CoolDownUIMapperTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

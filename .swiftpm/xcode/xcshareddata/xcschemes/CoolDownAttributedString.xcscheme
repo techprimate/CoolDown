@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDAttributedStringTests"
-               BuildableName = "CDAttributedStringTests"
-               BlueprintName = "CDAttributedStringTests"
+               BlueprintIdentifier = "CoolDownAttributedStringTests"
+               BuildableName = "CoolDownAttributedStringTests"
+               BlueprintName = "CoolDownAttributedStringTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

@@ -5,34 +5,34 @@ import PackageDescription
 let package = Package(
     name: "CoolDown",
     products: [
-        .library(name: "CoolDown", targets: ["CDASTParser"]),
-        .library(name: "CoolDownAttributedString", targets: ["CDAttributedString"]),
-        .library(name: "CoolDownUIMapper", targets: ["CDUIMapper"])
+        .library(name: "CoolDown", targets: ["CoolDownParser"]),
+        .library(name: "CoolDownAttributedString", targets: ["CoolDownAttributedString"]),
+        .library(name: "CoolDownUIMapper", targets: ["CoolDownUIMapper"])
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "2.2.0")),
         .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "8.0.7"))
     ],
     targets: [
-        .target(name: "CDASTParser"),
-        .testTarget(name: "CDASTParserTests", dependencies: [
-            "CDASTParser",
+        .target(name: "CoolDownParser"),
+        .testTarget(name: "CoolDownParserTests", dependencies: [
+            "CoolDownParser",
             "Quick",
             "Nimble"
         ]),
-        .target(name: "CDAttributedString", dependencies: [
-            "CDASTParser"
+        .target(name: "CoolDownAttributedString", dependencies: [
+            "CoolDownParser"
         ]),
-        .testTarget(name: "CDAttributedStringTests", dependencies: [
-            "CDAttributedString",
+        .testTarget(name: "CoolDownAttributedStringTests", dependencies: [
+            "CoolDownAttributedString",
             "Quick",
             "Nimble"
         ]),
-        .target(name: "CDUIMapper", dependencies: [
-            "CDASTParser"
+        .target(name: "CoolDownUIMapper", dependencies: [
+            "CoolDownParser"
         ]),
-        .testTarget(name: "CDUIMapperTests", dependencies: [
-            "CDUIMapper",
+        .testTarget(name: "CoolDownUIMapperTests", dependencies: [
+            "CoolDownUIMapper",
             "Quick",
             "Nimble"
         ]),
