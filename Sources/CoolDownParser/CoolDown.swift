@@ -6,9 +6,11 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
-class CoolDown {
+import Foundation
 
-    private(set) var nodes: [ASTNode]
+public class CoolDown {
+
+    public private(set) var nodes: [ASTNode]
 
     public init(_ text: String) {
         guard let lexer = Lexer(raw: text) else {
@@ -20,5 +22,9 @@ class CoolDown {
             parser.parse(block: block)
         }
         nodes = parser.result
+    }
+
+    public convenience init(url: URL) throws {
+        self.init(try String(contentsOf: url, encoding: .utf8))
     }
 }

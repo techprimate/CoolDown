@@ -90,7 +90,7 @@ public class ContainerNode: ASTNode {
 
 public class HeaderNode: ContainerNode {
 
-    let depth: Int
+    public let depth: Int
 
     init(depth: Int, nodes: [ASTNode]) {
         self.depth = depth
@@ -110,7 +110,7 @@ public class BulletNode: ContainerNode {}
 
 public class NumberedNode: ContainerNode {
 
-    let index: Int
+    public let index: Int
 
     init(index: Int, nodes: [ASTNode]) {
         self.index = index

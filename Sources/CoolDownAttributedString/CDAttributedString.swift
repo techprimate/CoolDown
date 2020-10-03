@@ -7,20 +7,21 @@
 //
 
 import CoolDownParser
+import Foundation
 #if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)
 import AppKit
 #endif
 
-public typealias Modifier = () -> [NSAttributedString.Key : Any]
+public typealias Modifier<Node> = (Node) -> [NSAttributedString.Key : Any]
 
 public class CDAttributedString {
 
     // MARK: - Properties
 
     private let nodes: [ASTNode]
-    private var modifiers: [String: Modifier] = [:]
+    private var modifiers: [String: Modifier<Any>] = [:]
 
     // MARK: - Initializer
 
@@ -28,9 +29,17 @@ public class CDAttributedString {
         self.nodes = nodes
     }
 
+    public convenience init(text: String) {
+        self.init(from: CoolDown(text).nodes)
+    }
+
+    public convenience init(url: URL) throws {
+        self.init(from: try CoolDown(url: url).nodes)
+    }
+
     // MARK: - Accessors
 
-    var attributedString: NSAttributedString {
+    public var attributedString: NSAttributedString {
         return nodes
             .map { NodeMapper.map(node: $0, modifiers: modifiers) }
             .reduce(NSAttributedString(), +)
@@ -38,7 +47,9 @@ public class CDAttributedString {
 
     // MARK: - Modifiers
 
-    func addModifier<Node: ASTNode>(for kind: Node.Type, modifier: @escaping Modifier) {
-        modifiers[String(describing: kind)] = modifier
+    public func addModifier<Node: ASTNode>(for kind: Node.Type, modifier: @escaping Modifier<Node>) {
+        modifiers[String(describing: kind)] = { node in
+            modifier(node as! Node)
+        }
     }
 }
