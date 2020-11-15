@@ -62,6 +62,8 @@ class FragmentCode: Fragment {
     }
 }
 
+class FragmentListItem: Fragment {}
+
 class FragmentParser {
 
     static func parseHeader(using lexer: FragmentLexer) -> FragmentHeader? {
@@ -239,5 +241,13 @@ class FragmentParser {
         }
         lexer.rewindCharacters(count: rewindCount)
         return nil
+    }
+
+    static func parseListItem(using lexer: FragmentLexer) -> FragmentListItem? {
+        guard lexer.next() == " " else {
+            lexer.rewindCharacters(count: 1)
+            return nil
+        }
+        return FragmentListItem()
     }
 }

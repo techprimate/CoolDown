@@ -25,6 +25,9 @@ class ASTParser {
             var whiteSpaceCount = 0
             var hasTrimmedWhitespaces = false
             var fragmentStack = [Fragment]()
+
+            var isFirstCharacter = false
+
             while let character = fragmentLexer.next() {
                 // Check if maximum leading whitespaces count is less than four otherwise it is a code block
                 if character == " " && !hasTrimmedWhitespaces {
@@ -36,6 +39,14 @@ class ASTParser {
                     continue
                 }
                 hasTrimmedWhitespaces = true
+
+                isFirstCharacter = true
+
+                if isFirstCharacter {
+                    if character == "-", let listItem = FragmentParser.parseListItem(using: fragmentLexer) {
+                            fragmentStack.append(listItem)
+                    }
+                }
 
                 // Fragment text content begins here
                 if character == "#", let header = FragmentParser.parseHeader(using: fragmentLexer) { // could be a header
@@ -73,6 +84,14 @@ class ASTParser {
                 contentNodes = []
             } else if let codeNode = node as? FragmentCode {
                 contentNodes.insert(.code(String(codeNode.text)), at: 0)
+            } else if node is FragmentListItem {
+                let node = ListNode.bullet(nodes: contentNodes)
+                if let listNode = result.last as? ListNode {
+                    listNode.nodes.append(node)
+                } else {
+                    result.append(.list(nodes: [node]))
+                }
+                contentNodes = []
             }
         }
         if !contentNodes.isEmpty {
@@ -114,6 +133,13 @@ class FragmentLexer: IteratorProtocol {
         return content[content.index(content.startIndex, offsetBy: offset)]
     }
 
+    func peakPrevious(count: Int = 1) -> Character? {
+        offset -= count
+        let character = currentCharacter
+        offset += count
+        return character
+    }
+
     func next() -> Character? {
         let character = self.currentCharacter
         offset += 1
@@ -127,6 +153,7 @@ class FragmentLexer: IteratorProtocol {
     }
 
     func rewindCharacter() {
+        assert(offset > 0, "Do not rewind below zero!")
         offset -= 1
     }
 
