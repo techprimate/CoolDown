@@ -17,6 +17,7 @@ class ASTParser {
     }
 
     func parse(block: String) {
+        // Split block by lines
         let fragments = block.split(separator: "\n")
         for fragment in fragments {
             var fragmentResult = [ASTNode]()
@@ -39,8 +40,8 @@ class ASTParser {
                 // Fragment text content begins here
                 if character == "#", let header = FragmentParser.parseHeader(using: fragmentLexer) { // could be a header
                     fragmentStack.append(header)
-                } else if character == "*", let parsedFragment = FragmentParser.parseCursiveOrBold(using: fragmentLexer) {
-                    fragmentStack.append(parsedFragment)
+                } else if character == "*", let parsedFragments = FragmentParser.parseCursiveOrBold(using: fragmentLexer) {
+                    fragmentStack += parsedFragments
                 } else {
                     if let textFragment = fragmentStack.last as? FragmentText {
                         textFragment.text.append(character)
@@ -61,6 +62,8 @@ class ASTParser {
                 contentNodes.insert(.cursive(String(cursiveNode.text)), at: 0)
             } else if let boldNode = node as? FragmentBold {
                 contentNodes.insert(.bold(String(boldNode.text)), at: 0)
+            } else if let cursiveBoldNode = node as? FragmentBoldCursive {
+                contentNodes.insert(.cursiveBold(String(cursiveBoldNode.text)), at: 0)
             } else if let textNode = node as? FragmentText {
                 contentNodes.insert(.text(String(textNode.text)), at: 0)
             } else if let headerNode = node as? FragmentHeader {
@@ -101,7 +104,7 @@ class FragmentLexer: IteratorProtocol {
     }
 
     var currentCharacter: Character? {
-        guard offset < content.count else {
+        guard offset >= 0 && offset < content.count else {
             return nil
         }
         return content[content.index(content.startIndex, offsetBy: offset)]

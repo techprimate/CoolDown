@@ -40,7 +40,8 @@ class CDAttributedStringSpec: QuickSpec {
                     .text("foo")
                 ]
                 let cdAttr = CDAttributedString(from: nodes)
-                cdAttr.addModifier(for: TextNode.self) {
+                cdAttr.addModifier(for: TextNode.self) { node in
+                    expect(node) == .text("foo")
                     return [
                         .foregroundColor: Color.green
                     ]

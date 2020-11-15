@@ -6,6 +6,8 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
+import Foundation
+
 public class ASTNode {
 
     //case link(_ content: String) or case link(content: String, target: String)
@@ -79,12 +81,27 @@ extension ASTNode: Equatable {
     }
 }
 
+extension ASTNode: CustomStringConvertible {
+
+    @objc public var description: String {
+        String(describing: type(of: self))
+    }
+}
+
 public class ContainerNode: ASTNode {
 
     public internal(set) var nodes: [ASTNode]
 
     internal init(nodes: [ASTNode]) {
         self.nodes = nodes
+    }
+
+    // MARK: - Custom String Convertible
+
+    @objc public override var description: String {
+        return String(describing: type(of: self)) + " {\n"
+            + nodes.map(\.description).joined(separator: "\n")
+            + "\n}"
     }
 }
 
@@ -95,6 +112,12 @@ public class HeaderNode: ContainerNode {
     init(depth: Int, nodes: [ASTNode]) {
         self.depth = depth
         super.init(nodes: nodes)
+    }
+
+    @objc override public var description: String {
+        return String(describing: type(of: self)) + "(\(depth)) {\n"
+            + nodes.map(\.description).joined(separator: "\n")
+            + "\n}"
     }
 }
 
@@ -116,6 +139,12 @@ public class NumberedNode: ContainerNode {
         self.index = index
         super.init(nodes: nodes)
     }
+
+    @objc override public var description: String {
+        return String(describing: type(of: self)) + "(\(index)) {\n"
+            + nodes.map(\.description).joined(separator: ", \n")
+            + "\n}"
+    }
 }
 
 public class TextNode: ASTNode {
@@ -124,6 +153,10 @@ public class TextNode: ASTNode {
 
     init(content: String) {
         self.content = content
+    }
+
+    @objc override public var description: String {
+        String(describing: type(of: self)) + "(\"\(content)\")"
     }
 }
 
