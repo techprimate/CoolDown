@@ -42,6 +42,8 @@ class ASTParser {
                     fragmentStack.append(header)
                 } else if character == "*", let parsedFragments = FragmentParser.parseCursiveOrBold(using: fragmentLexer) {
                     fragmentStack += parsedFragments
+                } else if character == "`", let parsedFragment = FragmentParser.parseInlineCodeBlock(using: fragmentLexer) {
+                    fragmentStack.append(parsedFragment)
                 } else {
                     if let textFragment = fragmentStack.last as? FragmentText {
                         textFragment.text.append(character)
@@ -69,6 +71,8 @@ class ASTParser {
             } else if let headerNode = node as? FragmentHeader {
                 result.append(.header(depth: headerNode.depth, nodes: contentNodes))
                 contentNodes = []
+            } else if let codeNode = node as? FragmentCode {
+                contentNodes.insert(.code(String(codeNode.text)), at: 0)
             }
         }
         if !contentNodes.isEmpty {

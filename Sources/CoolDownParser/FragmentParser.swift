@@ -54,6 +54,14 @@ class FragmentText: Fragment {
     }
 }
 
+class FragmentCode: Fragment {
+    var text: [Character]
+
+    init(characters: [Character]) {
+        self.text = characters
+    }
+}
+
 class FragmentParser {
 
     static func parseHeader(using lexer: FragmentLexer) -> FragmentHeader? {
@@ -210,12 +218,26 @@ class FragmentParser {
         }
         return fragments
     }
-    
+
     static func parseCodeBlock(from fragment: Substring, using lexer: FragmentLexer) -> [ASTNode] {
         // A code section can be arbitary block, but all lines have 4 leading spaces which are trimmed.
         let code = fragment[fragment.index(fragment.startIndex, offsetBy: 4)...]
         return [
             .code(String(code))
         ]
+    }
+
+    static func parseInlineCodeBlock(using lexer: FragmentLexer) -> FragmentCode? {
+        var characters = [Character]()
+        var rewindCount = 1
+        while let character = lexer.next() {
+            if character == "`" {
+                return FragmentCode(characters: characters)
+            }
+            characters.append(character)
+            rewindCount += 1
+        }
+        lexer.rewindCharacters(count: rewindCount)
+        return nil
     }
 }
