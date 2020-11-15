@@ -210,47 +210,12 @@ class FragmentParser {
         }
         return fragments
     }
-
-//    static func parse(cursive fragment: Substring) throws -> FragmentCursive? {
-//        var characterIterator = fragment.enumerated().makeIterator()
-//        var cursiveStartOffset = -1
-//        var cursiveEndOffset = 0
-//        while let (offset, character) = characterIterator.next() {
-//            // Find beginning of cursive inline object
-//            if character == "*" && cursiveStartIndex == -1 {
-//                cursiveStartOffset = offset
-//                continue
-//            }
-//            // If there is another * directly afterwards, it can not be a cursive object
-//            if character == "*" && offset == cursiveStartIndex + 1 {
-//                return nil
-//            }
-//            if character == "*" {
-//                cursiveEndOffset = offset
-//                break
-//            }
-//        }
-//        let startIndex = fragment.index(fragment.startIndex, offsetBy: cursiveStartOffset)
-//        let endIndex = fragment.index(fragment.startIndex, offsetBy: cursiveEndOffset)
-//        let preContent = fragment[...startIndex]
-//        let content = fragment[startIndex..<endIndex]
-//        let postContent = fragment[endIndex...]
-//        return FragmentCursive(preContent: preContent, content: content, postContent: postContent)
-//    }
-//
-//    private func matchesCursive(text: String) -> [String]? {
-//        let regex = try! Regex(pattern: "(.*)\\*(.+)\\*(.*)")
-//        let groups = regex.match(in: String(text)).captures
-//        return groups.isEmpty ? nil : groups
-//    }
-//
-//    private func matchesBold(text: String) -> [String]? {
-//        let regex = try! Regex(pattern: "(.*)\\*\\*(.+)\\*\\*(.*)")
-//        let groups = regex.match(in: String(text)).captures
-//        return groups.isEmpty ? nil : groups
-//    }
-
+    
     static func parseCodeBlock(from fragment: Substring, using lexer: FragmentLexer) -> [ASTNode] {
-        return []
+        // A code section can be arbitary block, but all lines have 4 leading spaces which are trimmed.
+        let code = fragment[fragment.index(fragment.startIndex, offsetBy: 4)...]
+        return [
+            .code(String(code))
+        ]
     }
 }

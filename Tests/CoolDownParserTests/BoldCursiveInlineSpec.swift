@@ -261,7 +261,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                     .paragraph(nodes: [
                         .text("some *"),
                         .cursive("cursive "),
-                        .text("  *unterminated-bold**")
+                        .text("unterminated-bold** text")
                     ])
                 ]
 
