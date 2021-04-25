@@ -4,10 +4,14 @@ import PackageDescription
 
 let package = Package(
     name: "CoolDown",
+    platforms: [
+        .iOS(.v11), .macOS(.v10_15)
+    ],
     products: [
         .library(name: "CoolDown", targets: ["CoolDownParser"]),
         .library(name: "CoolDownAttributedString", targets: ["CoolDownAttributedString"]),
-        .library(name: "CoolDownUIMapper", targets: ["CoolDownUIMapper"])
+        .library(name: "CoolDownUIMapper", targets: ["CoolDownUIMapper"]),
+        .library(name: "CoolDownSwiftUIMapper", targets: ["CoolDownSwiftUIMapper"])
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "2.2.0")),
@@ -35,6 +39,9 @@ let package = Package(
             "CoolDownUIMapper",
             "Quick",
             "Nimble"
+        ]),
+        .target(name: "CoolDownSwiftUIMapper", dependencies: [
+            "CoolDownParser"
         ]),
     ]
 )

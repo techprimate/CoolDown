@@ -8,14 +8,25 @@
 
 import Foundation
 
-public class ASTNode {
+public class ASTNode: Hashable, CustomStringConvertible, Equatable {
 
-    //case link(_ content: String) or case link(content: String, target: String)
-    //case image(_ content: String) or case image(content: String, source: String)
-    //custom cases e.g Map Element
-}
+    // case link(_ content: String) or case link(content: String, target: String)
+    // case image(_ content: String) or case image(content: String, source: String)
+    // custom cases e.g Map Element
 
-extension ASTNode: Equatable {
+    // MARK: - Hashable
+
+    public func hash(into hasher: inout Hasher) {
+        preconditionFailure("Subclass of ASTNode must implement hashing function")
+    }
+
+    // MARK: - CustomStringConvertible
+
+    public var description: String {
+        String(describing: type(of: self))
+    }
+
+    // MARK: - Equatable
 
     public static func == (lhs: ASTNode, rhs: ASTNode) -> Bool {
         if type(of: lhs) == type(of: rhs), let lhsNode = lhs as? ContainerNode, let rhsNode = rhs as? ContainerNode {
@@ -30,7 +41,7 @@ extension ASTNode: Equatable {
         return false
     }
 
-    // Generators
+    // MARK: - Generators
 
     public static func paragraph(nodes: [ASTNode]) -> ParagraphNode {
         ParagraphNode(nodes: nodes)
@@ -80,90 +91,3 @@ extension ASTNode: Equatable {
         CodeBlockNode(nodes: nodes)
     }
 }
-
-extension ASTNode: CustomStringConvertible {
-
-    @objc public var description: String {
-        String(describing: type(of: self))
-    }
-}
-
-public class ContainerNode: ASTNode {
-
-    public internal(set) var nodes: [ASTNode]
-
-    internal init(nodes: [ASTNode]) {
-        self.nodes = nodes
-    }
-
-    // MARK: - Custom String Convertible
-
-    @objc public override var description: String {
-        return String(describing: type(of: self)) + " {\n"
-            + nodes.map(\.description).joined(separator: "\n")
-            + "\n}"
-    }
-}
-
-public class HeaderNode: ContainerNode {
-
-    public let depth: Int
-
-    init(depth: Int, nodes: [ASTNode]) {
-        self.depth = depth
-        super.init(nodes: nodes)
-    }
-
-    @objc override public var description: String {
-        return String(describing: type(of: self)) + "(\(depth)) {\n"
-            + nodes.map(\.description).joined(separator: "\n")
-            + "\n}"
-    }
-}
-
-public class ParagraphNode: ContainerNode {}
-
-public class CodeBlockNode: ContainerNode {}
-
-public class QuoteNode: ContainerNode {}
-
-public class ListNode: ContainerNode {}
-
-public class BulletNode: ContainerNode {}
-
-public class NumberedNode: ContainerNode {
-
-    public let index: Int
-
-    init(index: Int, nodes: [ASTNode]) {
-        self.index = index
-        super.init(nodes: nodes)
-    }
-
-    @objc override public var description: String {
-        return String(describing: type(of: self)) + "(\(index)) {\n"
-            + nodes.map(\.description).joined(separator: ", \n")
-            + "\n}"
-    }
-}
-
-public class TextNode: ASTNode {
-
-    public let content: String
-
-    init(content: String) {
-        self.content = content
-    }
-
-    @objc override public var description: String {
-        String(describing: type(of: self)) + "(\"\(content)\")"
-    }
-}
-
-public class CursiveNode: TextNode {}
-
-public class BoldNode: TextNode {}
-
-public class CursiveBoldNode: TextNode {}
-
-public class CodeNode: TextNode {}

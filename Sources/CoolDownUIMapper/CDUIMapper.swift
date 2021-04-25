@@ -35,10 +35,14 @@ public class CDUIMapper {
 
     // MARK: - Accessors
 
-    func resolve() throws -> [View] {
+    public func resolve() throws -> [View] {
         try nodes.map { node in
             try NodeMapper.map(node: node, resolvers: resolvers)
         }
+    }
+
+    public func resolve(node: ASTNode) throws -> View {
+        try NodeMapper.map(node: node, resolvers: resolvers)
     }
 
     // MARK: - Modifiers

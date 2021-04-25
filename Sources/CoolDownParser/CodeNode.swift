@@ -1,0 +1,1 @@
+public class CodeNode: TextNode {}
