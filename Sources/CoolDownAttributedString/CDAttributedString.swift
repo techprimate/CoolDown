@@ -14,7 +14,7 @@ import UIKit
 import AppKit
 #endif
 
-public typealias Modifier<Node> = (Node) -> [NSAttributedString.Key : Any]
+public typealias Modifier<Node> = (Node) -> [NSAttributedString.Key: Any]
 
 public class CDAttributedString {
 
