@@ -15,7 +15,6 @@ public class ContainerNode: ASTNode {
     }
 
     public override func hash(into hasher: inout Hasher) {
-        super.hash(into: &hasher)
         nodes.hash(into: &hasher)
     }
 }

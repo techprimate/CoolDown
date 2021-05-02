@@ -11,7 +11,6 @@ public class TextNode: ASTNode {
     }
 
     public override func hash(into hasher: inout Hasher) {
-        super.hash(into: &hasher)
         content.hash(into: &hasher)
     }
 }
