@@ -49,7 +49,10 @@ public class CDAttributedString {
 
     public func addModifier<Node: ASTNode>(for kind: Node.Type, modifier: @escaping Modifier<Node>) {
         modifiers[String(describing: kind)] = { node in
-            modifier(node as! Node)
+            guard let node = node as? Node else {
+                fatalError("Internal modifier mismatch, expected node type does not match modifier type")
+            }
+            return modifier(node)
         }
     }
 }

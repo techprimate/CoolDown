@@ -48,7 +48,10 @@ public class CDSwiftUIMapper {
 
     public func addResolver<Node: ASTNode, ElementView: View>(for nodeType: Node.Type, resolver: @escaping (CDSwiftUIMapper, Node) -> ElementView) {
         resolvers[String(describing: nodeType)] = { node in
-            AnyView(resolver(self, node as! Node))
+            guard let node = node as? Node else {
+                fatalError("Internal resolver mismatch, expected node type does not match modifier type")
+            }
+            return AnyView(resolver(self, node))
         }
     }
 }
