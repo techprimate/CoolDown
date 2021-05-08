@@ -318,7 +318,7 @@ class CoolDownSpec: QuickSpec {
                             .bullet(nodes: [.text("eget accumsan leo gravida eget")]),
                             .bullet(nodes: [.text("Nullam ornare viverra purus")]),
                             .bullet(nodes: [.text("eget accumsan leo gravida eget")])
-                            ])
+                        ])
                     ]
 
                     let coolDown = CoolDown(text)
@@ -338,7 +338,7 @@ class CoolDownSpec: QuickSpec {
                             .bullet(nodes: [.text("eget accumsan leo gravida eget")]),
                             .bullet(nodes: [.text("Nullam ornare viverra purus")]),
                             .bullet(nodes: [.text("eget accumsan leo gravida eget")])
-                            ])
+                        ])
                     ]
 
                     let coolDown = CoolDown(text)
@@ -362,7 +362,7 @@ class CoolDownSpec: QuickSpec {
                             .bullet(nodes: [.text("eget accumsan leo gravida eget")]),
                             .bullet(nodes: [.text("Nullam ornare viverra purus")]),
                             .bullet(nodes: [.text("eget accumsan leo gravida eget")])
-                            ])
+                        ])
                     ]
 
                     let coolDown = CoolDown(text)
@@ -422,7 +422,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CoolDown(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-            
+
                 it("should parse multiple consecutive numbered items") {
                     let text = """
                     1. Nullam ornare viverra purus
@@ -559,20 +559,24 @@ class CoolDownSpec: QuickSpec {
             }
             
             describe("Bullet") {
-                it("should parse a single bullet item with - sign") {
+                it("should parse a single bullet item with - sign as list") {
                     let text = "- Nullam ornare viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .bullet(nodes: [.text("Nullam ornare viverra purus")])
+                        .list(nodes: [
+                            .bullet(nodes: [.text("Nullam ornare viverra purus")])
+                        ])
                     ]
 
                     let coolDown = CoolDown(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
-                it("should parse a single bullet item with * sign") {
+                it("should parse a single bullet item with * sign as list") {
                     let text = "* Nullam ornare viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .bullet(nodes: [.text("Nullam ornare viverra purus")])
+                        .list(nodes: [
+                            .bullet(nodes: [.text("Nullam ornare viverra purus")])
+                        ])
                     ]
 
                     let coolDown = CoolDown(text)
@@ -581,12 +585,14 @@ class CoolDownSpec: QuickSpec {
                 
 
                 it("should parse a nested bold node with - sign") {
-                    let text = "- Nullam **ornare** purus"
+                    let text = "- Nullam **ornare** viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .bullet(nodes: [
-                            .text("Nullam "),
-                            .bold("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .bullet(nodes: [
+                                .text("Nullam "),
+                                .bold("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -595,12 +601,14 @@ class CoolDownSpec: QuickSpec {
                 }
                 
                 it("should parse a nested bold node with * sign") {
-                    let text = "- Nullam **ornare** purus"
+                    let text = "- Nullam **ornare** viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .bullet(nodes: [
-                            .text("Nullam "),
-                            .bold("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .bullet(nodes: [
+                                .text("Nullam "),
+                                .bold("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -611,10 +619,12 @@ class CoolDownSpec: QuickSpec {
                 it("should parse a nested cursive node with - sign") {
                     let text = "- Nullam *ornare* viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .bullet(nodes: [
-                            .text("Nullam "),
-                            .cursive("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .bullet(nodes: [
+                                .text("Nullam "),
+                                .cursive("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -625,10 +635,12 @@ class CoolDownSpec: QuickSpec {
                 it("should parse a nested cursive node with * sign") {
                     let text = "* Nullam *ornare* viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .bullet(nodes: [
-                            .text("Nullam "),
-                            .cursive("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .bullet(nodes: [
+                                .text("Nullam "),
+                                .cursive("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -639,10 +651,12 @@ class CoolDownSpec: QuickSpec {
                 it("should parse a nested code node with - sign") {
                     let text = "- Nullam `ornare` viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .bullet(nodes: [
-                            .text("Nullam "),
-                            .code("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .bullet(nodes: [
+                                .text("Nullam "),
+                                .code("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -653,10 +667,12 @@ class CoolDownSpec: QuickSpec {
                 it("should parse a nested code node with * sign") {
                     let text = "* Nullam `ornare` viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .bullet(nodes: [
-                            .text("Nullam "),
-                            .code("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .bullet(nodes: [
+                                .text("Nullam "),
+                                .code("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -671,14 +687,16 @@ class CoolDownSpec: QuickSpec {
                     """
                     let expectedNodes: [ASTNode] = [
                         .header(depth: 1, nodes: [.text("Paragraph Title")]),
-                        .bullet(nodes: [
-                            .text("Nullam "),
-                            .bold("ornare"),
-                            .text(" viverra "),
-                            .cursive("purus"),
-                            .text(", eget accumsan "),
-                            .code("leo gravida"),
-                            .text(" eget.")
+                        .list(nodes: [
+                            .bullet(nodes: [
+                                .text("Nullam "),
+                                .bold("ornare"),
+                                .text(" viverra "),
+                                .cursive("purus"),
+                                .text(", eget accumsan "),
+                                .code("leo gravida"),
+                                .text(" eget.")
+                            ])
                         ])
                     ]
 
@@ -693,14 +711,16 @@ class CoolDownSpec: QuickSpec {
                     """
                     let expectedNodes: [ASTNode] = [
                         .header(depth: 1, nodes: [.text("Paragraph Title")]),
-                        .bullet(nodes: [
-                            .text("Nullam "),
-                            .bold("ornare"),
-                            .text(" viverra "),
-                            .cursive("purus"),
-                            .text(", eget accumsan "),
-                            .code("leo gravida"),
-                            .text(" eget.")
+                        .list(nodes: [
+                            .bullet(nodes: [
+                                .text("Nullam "),
+                                .bold("ornare"),
+                                .text(" viverra "),
+                                .cursive("purus"),
+                                .text(", eget accumsan "),
+                                .code("leo gravida"),
+                                .text(" eget.")
+                            ])
                         ])
                     ]
 
@@ -714,7 +734,9 @@ class CoolDownSpec: QuickSpec {
                 it("should parse a single numbered item") {
                     let text = "1. Nullam ornare viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .numbered(index: 1, nodes: [.text("Nullam ornare viverra purus")])
+                        .list(nodes: [
+                            .numbered(index: 1, nodes: [.text("Nullam ornare viverra purus")])
+                        ])
                     ]
 
                     let coolDown = CoolDown(text)
@@ -723,12 +745,14 @@ class CoolDownSpec: QuickSpec {
                 
                 
                 it("should parse a nested bold node") {
-                    let text = "23. Nullam **ornare** purus"
+                    let text = "23. Nullam **ornare** viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .numbered(index: 23, nodes: [
-                            .text("Nullam "),
-                            .bold("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .numbered(index: 23, nodes: [
+                                .text("Nullam "),
+                                .bold("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -739,10 +763,12 @@ class CoolDownSpec: QuickSpec {
                 it("should parse a nested cursive node") {
                     let text = "23. Nullam *ornare* viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .numbered(index: 23, nodes: [
-                            .text("Nullam "),
-                            .cursive("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .numbered(index: 23, nodes: [
+                                .text("Nullam "),
+                                .cursive("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -753,10 +779,12 @@ class CoolDownSpec: QuickSpec {
                 it("should parse a nested code node") {
                     let text = "23. Nullam `ornare` viverra purus"
                     let expectedNodes: [ASTNode] = [
-                        .numbered(index: 23, nodes: [
-                            .text("Nullam "),
-                            .code("ornare"),
-                            .text(" viverra purus")
+                        .list(nodes: [
+                            .numbered(index: 23, nodes: [
+                                .text("Nullam "),
+                                .code("ornare"),
+                                .text(" viverra purus")
+                            ])
                         ])
                     ]
 
@@ -771,14 +799,16 @@ class CoolDownSpec: QuickSpec {
                     """
                     let expectedNodes: [ASTNode] = [
                         .header(depth: 1, nodes: [.text("Paragraph Title")]),
-                        .numbered(index: 23, nodes: [
-                            .text("Nullam "),
-                            .bold("ornare"),
-                            .text(" viverra "),
-                            .cursive("purus"),
-                            .text(", eget accumsan "),
-                            .code("leo gravida"),
-                            .text(" eget.")
+                        .list(nodes: [
+                            .numbered(index: 23, nodes: [
+                                .text("Nullam "),
+                                .bold("ornare"),
+                                .text(" viverra "),
+                                .cursive("purus"),
+                                .text(", eget accumsan "),
+                                .code("leo gravida"),
+                                .text(" eget.")
+                            ])
                         ])
                     ]
 
@@ -790,10 +820,12 @@ class CoolDownSpec: QuickSpec {
             describe("Quote") {
                 it("should parse a full text as a quote") {
                     let text = """
-                    > Nullam ornare viverra purus, eget accumsan leo gravida eget. Nunc ligula mauris, molestie non aliquam a, pulvinar vel elit.
+                    > Nullam ornare viverra purus
                     """
                     let expectedNodes: [ASTNode] = [
-                        .quote(nodes: [.text("Nullam ornare viverra purus, eget accumsan leo gravida eget. Nunc ligula mauris, molestie non aliquam a, pulvinar vel elit.")])
+                        .quote(nodes: [
+                            .text("Nullam ornare viverra purus")
+                        ])
                     ]
 
                     let coolDown = CoolDown(text)
@@ -868,6 +900,67 @@ class CoolDownSpec: QuickSpec {
 
                     let coolDown = CoolDown(text)
                     expect(coolDown.nodes) == expectedNodes
+                }
+            }
+            describe("Text") {
+                context("text begins with numbers") {
+                    it("should parse with single leading digit") {
+                        let text = """
+                        1world
+                        """
+                        let expectedNodes: [ASTNode] = [
+                            .paragraph(nodes: [
+                                .text("1world")
+                            ])
+                        ]
+
+                        let coolDown = CoolDown(text)
+                        expect(coolDown.nodes) == expectedNodes
+                    }
+
+                    it("should parse with multiple leading digits") {
+                        let text = """
+                        123world
+                        """
+                        let expectedNodes: [ASTNode] = [
+                            .paragraph(nodes: [
+                                .text("123world")
+                            ])
+                        ]
+
+                        let coolDown = CoolDown(text)
+                        expect(coolDown.nodes) == expectedNodes
+                    }
+
+                    context("with whitespace after number") {
+                        it("should parse with single leading digit") {
+                            let text = """
+                            1 world
+                            """
+                            let expectedNodes: [ASTNode] = [
+                                .paragraph(nodes: [
+                                    .text("1 world")
+                                ])
+                            ]
+
+                            let coolDown = CoolDown(text)
+                            expect(coolDown.nodes) == expectedNodes
+                        }
+
+                        it("should parse with multiple leading digits") {
+                            let text = """
+                            123 world
+                            """
+                            let expectedNodes: [ASTNode] = [
+                                .paragraph(nodes: [
+                                    .text("123 world")
+                                ])
+                            ]
+
+                            let coolDown = CoolDown(text)
+                            expect(coolDown.nodes) == expectedNodes
+                        }
+                    }
                 }
             }
         }

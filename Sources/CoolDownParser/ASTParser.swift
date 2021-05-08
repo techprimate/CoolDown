@@ -26,7 +26,7 @@ class ASTParser {
             var hasTrimmedWhitespaces = false
             var fragmentStack = [Fragment]()
 
-            var isFirstCharacter = false
+            var isFirstCharacter = true
 
             while let character = fragmentLexer.next() {
                 // Check if maximum leading whitespaces count is less than four otherwise it is a code block
@@ -39,19 +39,33 @@ class ASTParser {
                     continue
                 }
                 hasTrimmedWhitespaces = true
+                // After trimming the whitespaces, the first relevant character is in focus.
+                // At the end of the loop it can't be the first character anymore.
+                // Therefore add a defer statement, to make sure
+                defer {
+                    isFirstCharacter = false
+                }
 
-                isFirstCharacter = true
-
+                // some first characters are distinct
                 if isFirstCharacter {
-                    if character == "-", let listItem = FragmentParser.parseListItem(using: fragmentLexer) {
-                            fragmentStack.append(listItem)
+                    // List items begin with leading dash or asteriks
+                    if character == "-" || character == "*", let listItem = FragmentParser.parseListItem(using: fragmentLexer) {
+                        fragmentStack.append(listItem)
+                        continue
+                    } else if character.isNumber, let numberItem = FragmentParser.parseNumberedItem(using: fragmentLexer, character: character) {
+                        fragmentStack.append(numberItem)
+                        continue
+                    } else if character == "#", let header = FragmentParser.parseHeader(using: fragmentLexer) { // could be a header
+                        fragmentStack.append(header)
+                        continue
+                    } else if character == ">", let quote = FragmentParser.parseQuote(using: fragmentLexer) {
+                        fragmentStack.append(quote)
+                        continue
                     }
                 }
 
                 // Fragment text content begins here
-                if character == "#", let header = FragmentParser.parseHeader(using: fragmentLexer) { // could be a header
-                    fragmentStack.append(header)
-                } else if character == "*", let parsedFragments = FragmentParser.parseCursiveOrBold(using: fragmentLexer) {
+                if character == "*", let parsedFragments = FragmentParser.parseCursiveOrBold(using: fragmentLexer) {
                     fragmentStack += parsedFragments
                 } else if character == "`", let parsedFragment = FragmentParser.parseInlineCodeBlock(using: fragmentLexer) {
                     fragmentStack.append(parsedFragment)
@@ -63,12 +77,12 @@ class ASTParser {
                     }
                 }
             }
-            flatFragmentsStack(stack: fragmentStack, result: &fragmentResult)
+            flatFragmentsStack(stack: fragmentStack, result: &fragmentResult, previous: result)
             result += fragmentResult
         }
     }
 
-    func flatFragmentsStack(stack: [Fragment], result: inout [ASTNode]) {
+    func flatFragmentsStack(stack: [Fragment], result: inout [ASTNode], previous: [ASTNode]) {
         var contentNodes: [ASTNode] = []
         for node in stack.reversed() {
             if let cursiveNode = node as? FragmentCursive {
@@ -84,9 +98,20 @@ class ASTParser {
                 contentNodes = []
             } else if let codeNode = node as? FragmentCode {
                 contentNodes.insert(.code(String(codeNode.text)), at: 0)
+            } else if node is FragmentQuote {
+                result.append(.quote(nodes: contentNodes))
+                contentNodes = []
             } else if node is FragmentListItem {
                 let node = ListNode.bullet(nodes: contentNodes)
-                if let listNode = result.last as? ListNode {
+                if let listNode = result.last as? ListNode ?? previous.last as? ListNode {
+                    listNode.nodes.append(node)
+                } else {
+                    result.append(.list(nodes: [node]))
+                }
+                contentNodes = []
+            } else if let numberedNode = node as? FragmentNumberedListItem {
+                let node = ListNode.numbered(index: numberedNode.number, nodes: contentNodes)
+                if let listNode = result.last as? ListNode ?? previous.last as? ListNode {
                     listNode.nodes.append(node)
                 } else {
                     result.append(.list(nodes: [node]))

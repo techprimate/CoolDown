@@ -64,6 +64,17 @@ class FragmentCode: Fragment {
 
 class FragmentListItem: Fragment {}
 
+class FragmentNumberedListItem: Fragment {
+
+    var number: Int
+
+    init(number: Int) {
+        self.number = number
+    }
+}
+
+class FragmentQuote: Fragment {}
+
 class FragmentParser {
 
     static func parseHeader(using lexer: FragmentLexer) -> FragmentHeader? {
@@ -249,5 +260,43 @@ class FragmentParser {
             return nil
         }
         return FragmentListItem()
+    }
+
+    static func parseNumberedItem(using lexer: FragmentLexer, character: Character) -> FragmentNumberedListItem? {
+        // Numbered items begin with a number and a dot before a whitespaces
+        var digits = [character]
+        while let nextCharacter = lexer.next() {
+            // Still searching for digits
+            if nextCharacter.isNumber {
+                digits.append(nextCharacter)
+                continue
+            }
+            // check that after the numbers there is a dot
+            guard nextCharacter == "." else {
+                // otherwise rewind the cursor
+                lexer.rewindCharacters(count: digits.count)
+                return nil
+            }
+            // after the dot, there must be a whitespae
+            guard lexer.next() == " " else {
+                lexer.rewindCharacters(count: digits.count + 1)
+                return nil
+            }
+            break
+        }
+        // If at least one digit is found, it is a valid number header
+        guard digits.count > 0, let value = Int(String(digits)) else {
+            return nil
+        }
+        return FragmentNumberedListItem(number: value)
+    }
+
+    static func parseQuote(using lexer: FragmentLexer) -> FragmentQuote? {
+        // After the quote character '>' there must be a whitespace
+        guard lexer.next() == " " else {
+            lexer.rewindCharacters(count: 1)
+            return nil
+        }
+        return FragmentQuote()
     }
 }
