@@ -13,7 +13,7 @@ import Nimble
 class BoldCursiveInlineSpec: QuickSpec {
 
     override func spec() {
-        describe("ASTParser") {
+        describe("BlockParser") {
             describe("cursive inline") {
                 context("standalone") {
                     it("should be parsed") {

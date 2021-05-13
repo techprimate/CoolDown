@@ -13,7 +13,7 @@ import Nimble
 class CoolDownSpec: QuickSpec {
 
     override func spec() {
-        describe("ASTParser") {
+        describe("BlockParser") {
             describe("Header") {
                 it("should parse single element starting with single hashtag") {
                     let text = "# Title 1"
@@ -444,7 +444,7 @@ class CoolDownSpec: QuickSpec {
                 }
                 
                 context("with empty lines") {
-                    it("should parse multiple consecutive numbered items") {
+                    it("should parse multiple consecutive numbered items as individual lists") {
                         let text = """
                         1. Nullam ornare viverra purus
 
@@ -457,8 +457,14 @@ class CoolDownSpec: QuickSpec {
                         let expectedNodes: [ASTNode] = [
                             .list(nodes: [
                                 .numbered(index: 1, nodes: [.text("Nullam ornare viverra purus")]),
+                            ]),
+                            .list(nodes: [
                                 .numbered(index: 2, nodes: [.text("Nullam ornare viverra purus")]),
+                            ]),
+                            .list(nodes: [
                                 .numbered(index: 3, nodes: [.text("Nullam ornare viverra purus")]),
+                            ]),
+                            .list(nodes: [
                                 .numbered(index: 4, nodes: [.text("Nullam ornare viverra purus")])
                             ])
                         ]

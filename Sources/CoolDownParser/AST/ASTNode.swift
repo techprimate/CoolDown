@@ -10,10 +10,6 @@ import Foundation
 
 public class ASTNode: Hashable, CustomStringConvertible, Equatable {
 
-    // case link(_ content: String) or case link(content: String, target: String)
-    // case image(_ content: String) or case image(content: String, source: String)
-    // custom cases e.g Map Element
-
     // MARK: - Hashable
 
     public func hash(into hasher: inout Hasher) {

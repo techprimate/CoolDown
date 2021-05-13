@@ -1,0 +1,1 @@
+class FragmentListItem: Fragment {}
