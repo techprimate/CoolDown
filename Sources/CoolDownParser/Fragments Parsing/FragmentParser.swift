@@ -7,30 +7,35 @@ internal class FragmentParser {
     /// Used type is `Substring` as it is supposed to be faster for per-character access
     private let fragment: Substring
 
+    /// Lexer used to iterate the characters
+    private let lexer: FragmentLexer
+
     /// Creates a new parser for the given fragment
     ///
     /// - Parameter fragment: Text fragment to be parsed
     internal init(fragment: Substring) {
         self.fragment = fragment
+        // Create a fragment lexer
+        self.lexer = FragmentLexer(content: fragment)
     }
 
     /// Parses the fragment into the given result reference
     ///
     /// - Parameter result: Reference of nodes array which will be mutated
     func parse(into result: inout [ASTNode]) {
-        let fragmentLexer = FragmentLexer(content: fragment)
-        var whiteSpaceCount = 0
-        var hasTrimmedWhitespaces = false
-        var fragmentStack = [Fragment]()
+        // Create a stack for managing the nesting of fragments
+        var fragmentStack: Stack<Fragment> = []
 
+        var indentation = 0
+        var hasTrimmedWhitespaces = false
         var isFirstCharacter = true
 
-        while let character = fragmentLexer.next() {
+        while let character = lexer.next() {
             // Check if maximum leading whitespaces count is less than four otherwise it is a code block
             if character == " " && !hasTrimmedWhitespaces {
-                whiteSpaceCount += 1
-                guard whiteSpaceCount < 4 else {
-                    result += FragmentParser.parseCodeBlock(from: fragment, using: fragmentLexer)
+                indentation += 1
+                guard indentation < 4 else {
+                    result += parseCodeBlock(from: fragment)
                     break
                 }
                 continue
@@ -46,38 +51,38 @@ internal class FragmentParser {
             // some first characters are distinct
             if isFirstCharacter {
                 // List items begin with leading dash or asteriks
-                if character == "-" || character == "*", let listItem = FragmentParser.parseListItem(using: fragmentLexer) {
-                    fragmentStack.append(listItem)
+                if character == "-" || character == "*", let listItem = parseListItem() {
+                    fragmentStack.push(listItem)
                     continue
-                } else if character.isNumber, let numberItem = FragmentParser.parseNumberedItem(using: fragmentLexer, character: character) {
-                    fragmentStack.append(numberItem)
+                } else if character.isNumber, let numberItem = parseNumberedItem(character: character) {
+                    fragmentStack.push(numberItem)
                     continue
-                } else if character == "#", let header = FragmentParser.parseHeader(using: fragmentLexer) { // could be a header
-                    fragmentStack.append(header)
+                } else if character == "#", let header = parseHeader() { // could be a header
+                    fragmentStack.push(header)
                     continue
-                } else if character == ">", let quote = FragmentParser.parseQuote(using: fragmentLexer) {
-                    fragmentStack.append(quote)
+                } else if character == ">", let quote = parseQuote() {
+                    fragmentStack.push(quote)
                     continue
                 }
             }
 
             // Fragment text content begins here
-            if character == "*", let parsedFragments = FragmentParser.parseCursiveOrBold(using: fragmentLexer) {
+            if character == "*", let parsedFragments = parseCursiveOrBold() {
                 fragmentStack += parsedFragments
-            } else if character == "`", let parsedFragment = FragmentParser.parseInlineCodeBlock(using: fragmentLexer) {
-                fragmentStack.append(parsedFragment)
+            } else if character == "`", let parsedFragment = parseInlineCodeBlock() {
+                fragmentStack.push(parsedFragment)
             } else {
-                if let textFragment = fragmentStack.last as? FragmentText {
+                if let textFragment = fragmentStack.top as? FragmentText {
                     textFragment.text.append(character)
                 } else {
-                    fragmentStack.append(FragmentText(character: character))
+                    fragmentStack.push(FragmentText(character: character))
                 }
             }
         }
         result += flatFragmentsStack(stack: fragmentStack, previous: result)
     }
 
-    func flatFragmentsStack(stack: [Fragment], previous: [ASTNode]) -> [ASTNode] {
+    func flatFragmentsStack(stack: Stack<Fragment>, previous: [ASTNode]) -> [ASTNode] {
         var result: [ASTNode] = []
         var contentNodes: [ASTNode] = []
         for node in stack.reversed() {
@@ -126,7 +131,7 @@ internal class FragmentParser {
     }
 
 
-    static func parseHeader(using lexer: FragmentLexer) -> FragmentHeader? {
+    private func parseHeader() -> FragmentHeader? {
         var hashtagCount = 1
         while let character = lexer.next() {
             // Count hashtags to determine depth
@@ -147,7 +152,7 @@ internal class FragmentParser {
     /// Tries to parse a fragment as either a cursive, bold or mix between them
     ///
     /// Precondition:This method shall be called if an asteriks (*) was found before
-    static func parseCursiveOrBold(using lexer: FragmentLexer) -> [Fragment]? {
+    private func parseCursiveOrBold() -> [Fragment]? {
         guard let nextCharacter = lexer.peakNext() else {
             // Asteriks has been the last character of this fragment and does not terminate.
             return nil
@@ -281,7 +286,7 @@ internal class FragmentParser {
         return fragments
     }
 
-    static func parseCodeBlock(from fragment: Substring, using lexer: FragmentLexer) -> [ASTNode] {
+    private func parseCodeBlock(from fragment: Substring) -> [ASTNode] {
         // A code section can be arbitary block, but all lines have 4 leading spaces which are trimmed.
         let code = fragment[fragment.index(fragment.startIndex, offsetBy: 4)...]
         return [
@@ -289,7 +294,7 @@ internal class FragmentParser {
         ]
     }
 
-    static func parseInlineCodeBlock(using lexer: FragmentLexer) -> FragmentCode? {
+    private func parseInlineCodeBlock() -> FragmentCode? {
         var characters = [Character]()
         var rewindCount = 1
         while let character = lexer.next() {
@@ -303,7 +308,7 @@ internal class FragmentParser {
         return nil
     }
 
-    static func parseListItem(using lexer: FragmentLexer) -> FragmentListItem? {
+    private func parseListItem() -> FragmentListItem? {
         guard lexer.next() == " " else {
             lexer.rewindCharacters(count: 1)
             return nil
@@ -311,7 +316,7 @@ internal class FragmentParser {
         return FragmentListItem()
     }
 
-    static func parseNumberedItem(using lexer: FragmentLexer, character: Character) -> FragmentNumberedListItem? {
+    private func parseNumberedItem(character: Character) -> FragmentNumberedListItem? {
         // Numbered items begin with a number and a dot before a whitespaces
         var digits = [character]
         while let nextCharacter = lexer.next() {
@@ -340,7 +345,7 @@ internal class FragmentParser {
         return FragmentNumberedListItem(number: value)
     }
 
-    static func parseQuote(using lexer: FragmentLexer) -> FragmentQuote? {
+    private func parseQuote() -> FragmentQuote? {
         // After the quote character '>' there must be a whitespace
         guard lexer.next() == " " else {
             lexer.rewindCharacters(count: 1)
