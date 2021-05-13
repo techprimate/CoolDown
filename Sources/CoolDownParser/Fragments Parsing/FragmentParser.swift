@@ -45,12 +45,14 @@ internal class FragmentParser {
             // Check if maximum leading whitespaces count is less than four otherwise it is a code block
             if character == " " && !hasTrimmedWhitespaces {
                 indentation += 1
+                // As soon as the indentation hits level 4, it is considered a code block
                 guard indentation < 4 else {
                     result += parseCodeBlock(from: fragment)
                     break
                 }
                 continue
             }
+            // After analyzing the indentation, whitespaces are normal characters in the text
             hasTrimmedWhitespaces = true
             // After trimming the whitespaces, the first relevant character is in focus.
             // At the end of the loop it can't be the first character anymore.
@@ -140,7 +142,6 @@ internal class FragmentParser {
         }
         return result
     }
-
 
     private func parseHeader() -> FragmentHeader? {
         var hashtagCount = 1

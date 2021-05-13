@@ -66,10 +66,6 @@ extension Stack: Collection {
 
     typealias Index = Int
 
-    func index(after i: Int) -> Int {
-        elements.index(after: i)
-    }
-
     var startIndex: Int {
         elements.startIndex
     }
@@ -78,8 +74,12 @@ extension Stack: Collection {
         elements.endIndex
     }
 
+    func index(after index: Int) -> Int {
+        elements.index(after: index)
+    }
+
     subscript(bounds: Range<Int>) -> ArraySlice<Stack<Element>> {
-        ArraySlice(arrayLiteral: Stack(Array(elements[bounds])))
+        ArraySlice([Stack(Array(elements[bounds]))])
     }
 
     subscript(position: Int) -> Element? {
@@ -91,7 +91,7 @@ extension Stack: Collection {
 
 extension Stack: RangeReplaceableCollection {
 
-    mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C : Collection, Self.Element == C.Element {
+    mutating func replaceSubrange<C>(_ subrange: Range<Int>, with newElements: C) where C: Collection, Self.Element == C.Element {
         var optionalElements: [Element?] = elements.map { $0 }
         optionalElements.replaceSubrange(subrange, with: newElements)
         self.elements = optionalElements.compactMap { $0 }
