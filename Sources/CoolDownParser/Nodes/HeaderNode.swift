@@ -13,7 +13,7 @@ public class HeaderNode: ContainerNode {
             + "\n}"
     }
 
-    public override func hash(into hasher: inout Hasher) {
+    override public func hash(into hasher: inout Hasher) {
         super.hash(into: &hasher)
         depth.hash(into: &hasher)
     }

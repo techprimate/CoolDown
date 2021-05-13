@@ -8,12 +8,12 @@ public class NumberedNode: ContainerNode {
     }
 
     override public var description: String {
-        return String(describing: type(of: self)) + "(\(index)) {\n"
+        String(describing: type(of: self)) + "(\(index)) {\n"
             + nodes.map(\.description).joined(separator: ", \n")
             + "\n}"
     }
 
-    public override func hash(into hasher: inout Hasher) {
+    override public func hash(into hasher: inout Hasher) {
         super.hash(into: &hasher)
         index.hash(into: &hasher)
     }

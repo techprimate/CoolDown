@@ -1,7 +1,7 @@
 import Foundation
 
 /// Used to parse a string-based Markdown document into a strongly typed tree structure
-public class CoolDown {
+public class CDParser {
 
     /// List of parsed nodes, representing the abstract syntax tree of a Markdown document
     public private(set) var nodes: [ASTNode] = []

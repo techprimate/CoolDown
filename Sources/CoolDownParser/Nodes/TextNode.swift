@@ -10,7 +10,7 @@ public class TextNode: ASTNode {
         String(describing: type(of: self)) + "(\"\(content)\")"
     }
 
-    public override func hash(into hasher: inout Hasher) {
+    override public func hash(into hasher: inout Hasher) {
         content.hash(into: &hasher)
     }
 }

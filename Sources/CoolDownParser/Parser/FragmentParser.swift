@@ -351,7 +351,7 @@ internal class FragmentParser {
             break
         }
         // If at least one digit is found, it is a valid number header
-        guard digits.count > 0, let value = Int(String(digits)) else {
+        guard !digits.isEmpty, let value = Int(String(digits)) else {
             return nil
         }
         return FragmentNumberedListItem(number: value)

@@ -18,7 +18,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("standalone") {
                     it("should be parsed") {
                         let text = "*foo*"
-                        let actualNodes = CoolDown(text).nodes
+                        let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [.cursive("foo")])
                         ]
@@ -29,7 +29,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("in full-text") {
                     it("should be parsed") {
                         let text = "some preceeding text *foo* some succeeding text"
-                        let actualNodes = CoolDown(text).nodes
+                        let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .text("some preceeding text "),
@@ -44,7 +44,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("in word") {
                     it("should be parsed") {
                         let text = "super*awesome*library"
-                        let actualNodes = CoolDown(text).nodes
+                        let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .text("super"),
@@ -62,7 +62,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("standalone") {
                     it("should be parsed") {
                         let text = "**foo**"
-                        let actualNodes = CoolDown(text).nodes
+                        let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [.bold("foo")])
                         ]
@@ -73,7 +73,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("in full-text") {
                     it("should be parsed") {
                         let text = "some preceeding text **foo** some succeeding text"
-                        let actualNodes = CoolDown(text).nodes
+                        let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .text("some preceeding text "),
@@ -88,7 +88,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("in word") {
                     it("should be parsed") {
                         let text = "super**awesome**library"
-                        let actualNodes = CoolDown(text).nodes
+                        let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .text("super"),
@@ -106,7 +106,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("standalone") {
                 it("should be parsed") {
                     let text = "***foo***"
-                    let actualNodes = CoolDown(text).nodes
+                    let actualNodes = CDParser(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [.cursiveBold("foo")])
                     ]
@@ -117,7 +117,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("in full-text") {
                     it("should be parsed") {
                         let text = "some preceeding text ***foo*** some succeeding text"
-                        let actualNodes = CoolDown(text).nodes
+                        let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .text("some preceeding text "),
@@ -132,7 +132,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 context("in word") {
                     it("should be parsed") {
                         let text = "super***awesome***library"
-                        let actualNodes = CoolDown(text).nodes
+                        let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .text("super"),
@@ -149,7 +149,7 @@ class BoldCursiveInlineSpec: QuickSpec {
             context("bold in cursive") {
                 it("should return both elements") {
                     let text = "*some **bold** in cursive*"
-                    let actualNodes = CoolDown(text).nodes
+                    let actualNodes = CDParser(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .cursive("some "),
@@ -165,7 +165,7 @@ class BoldCursiveInlineSpec: QuickSpec {
             context("cursive in bold") {
                 it("should return both elements") {
                     let text = "**some *cursive* in bold**"
-                    let actualNodes = CoolDown(text).nodes
+                    let actualNodes = CDParser(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .bold("some "),
@@ -181,7 +181,7 @@ class BoldCursiveInlineSpec: QuickSpec {
             context("in bold cursive") {
                 it("should return both elements") {
                     let text = "**in bold *cursive***"
-                    let actualNodes = CoolDown(text).nodes
+                    let actualNodes = CDParser(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .bold("in bold "),
@@ -196,7 +196,7 @@ class BoldCursiveInlineSpec: QuickSpec {
             context("in cursive bold") {
                 it("should return both elements") {
                     let text = "*in cursive **bold***"
-                    let actualNodes = CoolDown(text).nodes
+                    let actualNodes = CDParser(text).nodes
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .cursive("in cursive "),
@@ -212,7 +212,7 @@ class BoldCursiveInlineSpec: QuickSpec {
         describe("non-terminating cursive") {
             it("should return a text with the leading asteriks") {
                 let text = "word *some text"
-                let actualNodes = CoolDown(text).nodes
+                let actualNodes = CDParser(text).nodes
                 let expectedNodes: [ASTNode] = [
                     .paragraph(nodes: [
                         .text(text)
@@ -226,7 +226,7 @@ class BoldCursiveInlineSpec: QuickSpec {
         describe("non-terminating bold") {
             it("should return a text with the leading two asteriks") {
                 let text = "word **some text"
-                let actualNodes = CoolDown(text).nodes
+                let actualNodes = CDParser(text).nodes
                 let expectedNodes: [ASTNode] = [
                     .paragraph(nodes: [
                         .text(text),
@@ -240,7 +240,7 @@ class BoldCursiveInlineSpec: QuickSpec {
         describe("non-terminating nested cursive in bold") {
             it("should ignore nested block") {
                 let text = "some *cursive **unterminated-bold* text"
-                let actualNodes = CoolDown(text).nodes
+                let actualNodes = CDParser(text).nodes
                 let expectedNodes: [ASTNode] = [
                     .paragraph(nodes: [
                         .text("some "),
@@ -256,7 +256,7 @@ class BoldCursiveInlineSpec: QuickSpec {
         describe("non-terminating nested bold in cursive") {
             it("should only parse the nested block") {
                 let text = "some **cursive *unterminated-bold** text"
-                let actualNodes = CoolDown(text).nodes
+                let actualNodes = CDParser(text).nodes
                 let expectedNodes: [ASTNode] = [
                     .paragraph(nodes: [
                         .text("some *"),

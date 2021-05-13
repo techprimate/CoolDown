@@ -30,17 +30,17 @@ public class CDAttributedString {
     }
 
     public convenience init(text: String) {
-        self.init(from: CoolDown(text).nodes)
+        self.init(from: CDParser(text).nodes)
     }
 
     public convenience init(url: URL) throws {
-        self.init(from: try CoolDown(url: url).nodes)
+        self.init(from: try CDParser(url: url).nodes)
     }
 
     // MARK: - Accessors
 
     public var attributedString: NSAttributedString {
-        return nodes
+        nodes
             .map { NodeMapper.map(node: $0, modifiers: modifiers) }
             .reduce(NSAttributedString(), +)
     }

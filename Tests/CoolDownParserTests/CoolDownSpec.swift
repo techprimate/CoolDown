@@ -21,7 +21,7 @@ class CoolDownSpec: QuickSpec {
                         .header(depth: 1, nodes: [.text("Title 1")])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -39,7 +39,7 @@ class CoolDownSpec: QuickSpec {
                         .header(depth: 1,nodes: [.text("Title 4")])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -61,7 +61,7 @@ class CoolDownSpec: QuickSpec {
                             .header(depth: 1,nodes: [.text("Title 4")])
                         ]
 
-                        let coolDown = CoolDown(text)
+                        let coolDown = CDParser(text)
                         expect(coolDown.nodes) == expectedNodes
                     }
                 }
@@ -82,7 +82,7 @@ class CoolDownSpec: QuickSpec {
                         .header(depth: 1, nodes: [.text("Title 5")])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -107,7 +107,7 @@ class CoolDownSpec: QuickSpec {
                             .header(depth: 1, nodes: [.text("Title 5")])
                         ]
 
-                        let coolDown = CoolDown(text)
+                        let coolDown = CDParser(text)
                         expect(coolDown.nodes) == expectedNodes
                     }
                 }
@@ -122,7 +122,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -136,7 +136,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -152,7 +152,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -168,7 +168,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -178,7 +178,7 @@ class CoolDownSpec: QuickSpec {
                             // based on https://spec.commonmark.org/0.29/#example-38
                             let text = Array(repeating: " ", count: i).joined() + "# foo"
                             let expectedNodes: [ASTNode] = [.header(depth: 1, nodes: [.text("foo")])]
-                            expect(CoolDown(text).nodes) == expectedNodes
+                            expect(CDParser(text).nodes) == expectedNodes
                         }
                     }
                 }
@@ -188,7 +188,7 @@ class CoolDownSpec: QuickSpec {
                         // based on https://spec.commonmark.org/0.29/#example-39
                         let text = "    # foo"
                         let expectedNodes: [ASTNode] = [.code("# foo")]
-                        expect(CoolDown(text).nodes) == expectedNodes
+                        expect(CDParser(text).nodes) == expectedNodes
                     }
                 }
 
@@ -215,7 +215,7 @@ class CoolDownSpec: QuickSpec {
                             .paragraph(nodes: [.text("####four hashtags")])
                         ]
 
-                        expect(CoolDown(text).nodes) == expectedNodes
+                        expect(CDParser(text).nodes) == expectedNodes
                     }
                 }
             }
@@ -229,7 +229,7 @@ class CoolDownSpec: QuickSpec {
                         .paragraph(nodes: [.text("Nullam ornare viverra purus, eget accumsan leo gravida eget. Nunc ligula mauris, molestie non aliquam a, pulvinar vel elit.")])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -245,7 +245,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -261,7 +261,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -277,7 +277,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -299,7 +299,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
             }
@@ -321,7 +321,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -341,7 +341,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -365,7 +365,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -419,7 +419,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -439,7 +439,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -469,7 +469,7 @@ class CoolDownSpec: QuickSpec {
                             ])
                         ]
 
-                        let coolDown = CoolDown(text)
+                        let coolDown = CDParser(text)
                         expect(coolDown.nodes) == expectedNodes
                     }
                 }
@@ -498,7 +498,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -558,7 +558,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -573,7 +573,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -585,7 +585,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -602,7 +602,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -618,7 +618,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -634,7 +634,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -650,7 +650,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -666,7 +666,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -682,7 +682,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -706,7 +706,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -730,7 +730,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -745,7 +745,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -762,7 +762,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -778,7 +778,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -794,7 +794,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -818,7 +818,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
             }
@@ -834,7 +834,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -850,7 +850,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -866,7 +866,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
                 
@@ -882,7 +882,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
 
@@ -904,7 +904,7 @@ class CoolDownSpec: QuickSpec {
                         ])
                     ]
 
-                    let coolDown = CoolDown(text)
+                    let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
             }
@@ -920,7 +920,7 @@ class CoolDownSpec: QuickSpec {
                             ])
                         ]
 
-                        let coolDown = CoolDown(text)
+                        let coolDown = CDParser(text)
                         expect(coolDown.nodes) == expectedNodes
                     }
 
@@ -934,7 +934,7 @@ class CoolDownSpec: QuickSpec {
                             ])
                         ]
 
-                        let coolDown = CoolDown(text)
+                        let coolDown = CDParser(text)
                         expect(coolDown.nodes) == expectedNodes
                     }
 
@@ -949,7 +949,7 @@ class CoolDownSpec: QuickSpec {
                                 ])
                             ]
 
-                            let coolDown = CoolDown(text)
+                            let coolDown = CDParser(text)
                             expect(coolDown.nodes) == expectedNodes
                         }
 
@@ -963,7 +963,7 @@ class CoolDownSpec: QuickSpec {
                                 ])
                             ]
 
-                            let coolDown = CoolDown(text)
+                            let coolDown = CDParser(text)
                             expect(coolDown.nodes) == expectedNodes
                         }
                     }
