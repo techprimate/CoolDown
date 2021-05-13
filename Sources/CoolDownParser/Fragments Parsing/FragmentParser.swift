@@ -19,17 +19,28 @@ internal class FragmentParser {
         self.lexer = FragmentLexer(content: fragment)
     }
 
-    /// Parses the fragment into the given result reference
+    /// Parses the fragment into the given result reference.
+    ///
+    /// # Complexity
+    ///
+    /// In average each character needs to iterated only once, therefore the performance is `O(1)`.
     ///
     /// - Parameter result: Reference of nodes array which will be mutated
-    func parse(into result: inout [ASTNode]) {
+    /// - Complexity: approx. O(1)
+    internal func parse(into result: inout [ASTNode]) {
         // Create a stack for managing the nesting of fragments
         var fragmentStack: Stack<Fragment> = []
 
+        // Variable to track leading whitespace indentation
         var indentation = 0
+        // Flag to track if leading whitespaces have been trimmed
         var hasTrimmedWhitespaces = false
+        // Flag to track if the current character is the first one.
+        // This is necessary, as the first character returned by the lexer could be a leading whitespace
+        // which are ignored, but we need to handle the first non-whitespace character different than others.
         var isFirstCharacter = true
 
+        // Iterate all characters
         while let character = lexer.next() {
             // Check if maximum leading whitespaces count is less than four otherwise it is a code block
             if character == " " && !hasTrimmedWhitespaces {
