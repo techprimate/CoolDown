@@ -160,6 +160,36 @@ class BoldCursiveInlineSpec: QuickSpec {
 
                     expect(actualNodes) == expectedNodes
                 }
+
+                context("at start") {
+                    it("should return both elements") {
+                        let text = "***bold** in cursive*"
+                        let actualNodes = CDParser(text).nodes
+                        let expectedNodes: [ASTNode] = [
+                            .paragraph(nodes: [
+                                .cursiveBold("bold"),
+                                .cursive(" in cursive"),
+                            ])
+                        ]
+
+                        expect(actualNodes) == expectedNodes
+                    }
+                }
+
+                context("at end") {
+                    it("should return both elements") {
+                        let text = "*cursive around **bold***"
+                        let actualNodes = CDParser(text).nodes
+                        let expectedNodes: [ASTNode] = [
+                            .paragraph(nodes: [
+                                .cursive("cursive around "),
+                                .cursiveBold("bold"),
+                            ])
+                        ]
+
+                        expect(actualNodes) == expectedNodes
+                    }
+                }
             }
 
             context("cursive in bold") {
@@ -176,20 +206,35 @@ class BoldCursiveInlineSpec: QuickSpec {
 
                     expect(actualNodes) == expectedNodes
                 }
-            }
 
-            context("in bold cursive") {
-                it("should return both elements") {
-                    let text = "**in bold *cursive***"
-                    let actualNodes = CDParser(text).nodes
-                    let expectedNodes: [ASTNode] = [
-                        .paragraph(nodes: [
-                            .bold("in bold "),
-                            .cursiveBold("cursive"),
-                        ])
-                    ]
+                context("at start") {
+                    it("should return both elements") {
+                        let text = "***cursive* in bold*"
+                        let actualNodes = CDParser(text).nodes
+                        let expectedNodes: [ASTNode] = [
+                            .paragraph(nodes: [
+                                .cursiveBold("cursive"),
+                                .bold(" in bold"),
+                            ])
+                        ]
 
-                    expect(actualNodes) == expectedNodes
+                        expect(actualNodes) == expectedNodes
+                    }
+                }
+
+                context("at end") {
+                    it("should return both elements") {
+                        let text = "**bold around *cursive***"
+                        let actualNodes = CDParser(text).nodes
+                        let expectedNodes: [ASTNode] = [
+                            .paragraph(nodes: [
+                                .bold("bold around "),
+                                .cursiveBold("cursive"),
+                            ])
+                        ]
+
+                        expect(actualNodes) == expectedNodes
+                    }
                 }
             }
 
