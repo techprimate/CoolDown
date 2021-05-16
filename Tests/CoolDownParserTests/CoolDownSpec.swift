@@ -187,7 +187,11 @@ class CoolDownSpec: QuickSpec {
                     it("should not parse as a header") {
                         // based on https://spec.commonmark.org/0.29/#example-39
                         let text = "    # foo"
-                        let expectedNodes: [ASTNode] = [.code("# foo")]
+                        let expectedNodes: [ASTNode] = [
+                            .codeBlock(nodes: [
+                                .code("# foo")
+                            ])
+                        ]
                         expect(CDParser(text).nodes) == expectedNodes
                     }
                 }

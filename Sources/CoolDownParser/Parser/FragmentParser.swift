@@ -47,7 +47,7 @@ internal class FragmentParser {
                 indentation += 1
                 // As soon as the indentation hits level 4, it is considered a code block
                 guard indentation < 4 else {
-                    result += parseCodeBlock(from: fragment)
+                    fragmentStack.push(parseCodeBlock(from: fragment))
                     break
                 }
                 continue
@@ -129,6 +129,23 @@ internal class FragmentParser {
                     listNode.nodes.append(node)
                 } else {
                     result.append(.list(nodes: [node]))
+                }
+                contentNodes = []
+            } else if let codeBlockNode = node as? FragmentCodeBlock {
+                // If there is a previous code block, append the code line
+                if let previousBlockNode = result.last as? CodeBlockNode ?? previous.last as? CodeBlockNode {
+                    let code = codeBlockNode.code ?? ""
+                    // Ignore leading empty code lines
+                    if !(previousBlockNode.nodes.isEmpty && code.isEmpty) {
+                        previousBlockNode.nodes.append(CodeNode(content: code))
+                    }
+                } else {
+                    if let code = codeBlockNode.code {
+                        let node = CodeNode(content: code)
+                        result.append(.codeBlock(nodes: [node]))
+                    } else {
+                        result.append(.codeBlock(nodes: []))
+                    }
                 }
                 contentNodes = []
             }
@@ -298,12 +315,15 @@ internal class FragmentParser {
         return fragments
     }
 
-    private func parseCodeBlock(from fragment: Substring) -> [ASTNode] {
+    private func parseCodeBlock(from fragment: Substring) -> FragmentCodeBlock {
         // A code section can be arbitary block, but all lines have 4 leading spaces which are trimmed.
         let code = fragment[fragment.index(fragment.startIndex, offsetBy: 4)...]
-        return [
-            .code(String(code))
-        ]
+        // If there is no code inside the code block, return an empty block
+        // It should not return an empty code node
+        if code.isEmpty {
+            return FragmentCodeBlock(code: nil)
+        }
+        return FragmentCodeBlock(code: String(code))
     }
 
     private func parseInlineCodeBlock() -> FragmentCode? {
