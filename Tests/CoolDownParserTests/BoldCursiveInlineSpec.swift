@@ -6,9 +6,9 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
-import Quick
-import Nimble
 @testable import CoolDownParser
+import Nimble
+import Quick
 
 class BoldCursiveInlineSpec: QuickSpec {
 
@@ -168,7 +168,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .cursiveBold("bold"),
-                                .cursive(" in cursive"),
+                                .cursive(" in cursive")
                             ])
                         ]
 
@@ -183,7 +183,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .cursive("cursive around "),
-                                .cursiveBold("bold"),
+                                .cursiveBold("bold")
                             ])
                         ]
 
@@ -214,7 +214,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .cursiveBold("cursive"),
-                                .bold(" in bold"),
+                                .bold(" in bold")
                             ])
                         ]
 
@@ -229,7 +229,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [
                                 .bold("bold around "),
-                                .cursiveBold("cursive"),
+                                .cursiveBold("cursive")
                             ])
                         ]
 
@@ -245,7 +245,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                     let expectedNodes: [ASTNode] = [
                         .paragraph(nodes: [
                             .cursive("in cursive "),
-                            .cursiveBold("bold"),
+                            .cursiveBold("bold")
                         ])
                     ]
 
@@ -274,7 +274,7 @@ class BoldCursiveInlineSpec: QuickSpec {
                 let actualNodes = CDParser(text).nodes
                 let expectedNodes: [ASTNode] = [
                     .paragraph(nodes: [
-                        .text(text),
+                        .text(text)
                     ])
                 ]
 

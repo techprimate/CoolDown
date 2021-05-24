@@ -6,9 +6,9 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
-import Quick
-import Nimble
 @testable import CoolDownParser
+import Nimble
+import Quick
 
 class CoolDownSpec: QuickSpec {
 
@@ -33,10 +33,10 @@ class CoolDownSpec: QuickSpec {
                     # Title 4
                     """
                     let expectedNodes: [ASTNode] = [
-                        .header(depth: 1,nodes: [.text("Title 1")]),
-                        .header(depth: 1,nodes: [.text("Title 2")]),
-                        .header(depth: 1,nodes: [.text("Title 3")]),
-                        .header(depth: 1,nodes: [.text("Title 4")])
+                        .header(depth: 1, nodes: [.text("Title 1")]),
+                        .header(depth: 1, nodes: [.text("Title 2")]),
+                        .header(depth: 1, nodes: [.text("Title 3")]),
+                        .header(depth: 1, nodes: [.text("Title 4")])
                     ]
 
                     let coolDown = CDParser(text)
@@ -55,17 +55,17 @@ class CoolDownSpec: QuickSpec {
                         # Title 4
                         """
                         let expectedNodes: [ASTNode] = [
-                            .header(depth: 1,nodes: [.text("Title 1")]),
-                            .header(depth: 1,nodes: [.text("Title 2")]),
-                            .header(depth: 1,nodes: [.text("Title 3")]),
-                            .header(depth: 1,nodes: [.text("Title 4")])
+                            .header(depth: 1, nodes: [.text("Title 1")]),
+                            .header(depth: 1, nodes: [.text("Title 2")]),
+                            .header(depth: 1, nodes: [.text("Title 3")]),
+                            .header(depth: 1, nodes: [.text("Title 4")])
                         ]
 
                         let coolDown = CDParser(text)
                         expect(coolDown.nodes) == expectedNodes
                     }
                 }
-                
+
                 it("should parse multiple header elements with different depths") {
                     let text = """
                     ## Title 1
@@ -125,7 +125,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse cursive nodes in element") {
                     let text = "# Title 1 - *cursive title* more title"
                     let expectedNodes: [ASTNode] = [
@@ -139,7 +139,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse bold and cursive nodes in element") {
                     let text = "# Title 1 - **heavy title**, *cursive title* more title"
                     let expectedNodes: [ASTNode] = [
@@ -155,7 +155,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse bold and cursive nodes in element with high depth") {
                     let text = "#### Title 1 - **heavy title**, *cursive title* more title"
                     let expectedNodes: [ASTNode] = [
@@ -268,7 +268,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a nested code node") {
                     let text = """
                     Nullam `ornare` viverra purus
@@ -307,7 +307,7 @@ class CoolDownSpec: QuickSpec {
                     expect(coolDown.nodes) == expectedNodes
                 }
             }
-            
+
             describe("List") {
                 it("should parse multiple bullet item with - sign") {
                     let text = """
@@ -328,7 +328,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse multiple bullet item with * sign") {
                     let text = """
                     * Nullam ornare viverra purus
@@ -348,7 +348,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse multiple bullet item with mixeds signs") {
                     let text = """
                     * Nullam ornare viverra purus
@@ -446,7 +446,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 context("with empty lines") {
                     it("should parse multiple consecutive numbered items as individual lists") {
                         let text = """
@@ -460,13 +460,13 @@ class CoolDownSpec: QuickSpec {
                         """
                         let expectedNodes: [ASTNode] = [
                             .list(nodes: [
-                                .numbered(index: 1, nodes: [.text("Nullam ornare viverra purus")]),
+                                .numbered(index: 1, nodes: [.text("Nullam ornare viverra purus")])
                             ]),
                             .list(nodes: [
-                                .numbered(index: 2, nodes: [.text("Nullam ornare viverra purus")]),
+                                .numbered(index: 2, nodes: [.text("Nullam ornare viverra purus")])
                             ]),
                             .list(nodes: [
-                                .numbered(index: 3, nodes: [.text("Nullam ornare viverra purus")]),
+                                .numbered(index: 3, nodes: [.text("Nullam ornare viverra purus")])
                             ]),
                             .list(nodes: [
                                 .numbered(index: 4, nodes: [.text("Nullam ornare viverra purus")])
@@ -477,7 +477,7 @@ class CoolDownSpec: QuickSpec {
                         expect(coolDown.nodes) == expectedNodes
                     }
                 }
-                
+
                 it("should parse multiple non consecutive numbered items") {
                     let text = """
                     42. Nullam ornare viverra purus
@@ -565,9 +565,9 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
             }
-            
+
             describe("Bullet") {
                 it("should parse a single bullet item with - sign as list") {
                     let text = "- Nullam ornare viverra purus"
@@ -580,7 +580,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a single bullet item with * sign as list") {
                     let text = "* Nullam ornare viverra purus"
                     let expectedNodes: [ASTNode] = [
@@ -592,7 +592,6 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
 
                 it("should parse a nested bold node with - sign") {
                     let text = "- Nullam **ornare** viverra purus"
@@ -609,7 +608,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a nested bold node with * sign") {
                     let text = "- Nullam **ornare** viverra purus"
                     let expectedNodes: [ASTNode] = [
@@ -641,7 +640,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a nested cursive node with * sign") {
                     let text = "* Nullam *ornare* viverra purus"
                     let expectedNodes: [ASTNode] = [
@@ -657,7 +656,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a nested code node with - sign") {
                     let text = "- Nullam `ornare` viverra purus"
                     let expectedNodes: [ASTNode] = [
@@ -673,7 +672,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a nested code node with * sign") {
                     let text = "* Nullam `ornare` viverra purus"
                     let expectedNodes: [ASTNode] = [
@@ -713,7 +712,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse header, bold and cursive nodes with * sign") {
                     let text = """
                     # Paragraph Title
@@ -737,9 +736,9 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
             }
-            
+
             describe("Numbered") {
                 it("should parse a single numbered item") {
                     let text = "1. Nullam ornare viverra purus"
@@ -752,8 +751,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
-                
+
                 it("should parse a nested bold node") {
                     let text = "23. Nullam **ornare** viverra purus"
                     let expectedNodes: [ASTNode] = [
@@ -769,7 +767,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a nested cursive node") {
                     let text = "23. Nullam *ornare* viverra purus"
                     let expectedNodes: [ASTNode] = [
@@ -785,7 +783,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a nested code node") {
                     let text = "23. Nullam `ornare` viverra purus"
                     let expectedNodes: [ASTNode] = [
@@ -826,7 +824,7 @@ class CoolDownSpec: QuickSpec {
                     expect(coolDown.nodes) == expectedNodes
                 }
             }
-            
+
             describe("Quote") {
                 it("should parse a full text as a quote") {
                     let text = """
@@ -873,7 +871,7 @@ class CoolDownSpec: QuickSpec {
                     let coolDown = CDParser(text)
                     expect(coolDown.nodes) == expectedNodes
                 }
-                
+
                 it("should parse a nested code node") {
                     let text = """
                     > Nullam `ornare` viverra purus

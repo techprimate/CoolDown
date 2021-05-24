@@ -5,8 +5,8 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
-import Quick
 import Nimble
+import Quick
 #if canImport(UIKit)
 import UIKit
 
@@ -16,8 +16,8 @@ import AppKit
 
 typealias Color = NSColor
 #endif
-import CoolDownParser
 @testable import CoolDownAttributedString
+import CoolDownParser
 
 class CDAttributedStringSpec: QuickSpec {
 

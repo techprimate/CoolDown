@@ -6,9 +6,9 @@
 //  Copyright © techprimate GmbH & Co. KG 2021. All Rights Reserved!
 //
 
-import Quick
-import Nimble
 @testable import CoolDownParser
+import Nimble
+import Quick
 
 class CodeBlockSpec: QuickSpec {
 

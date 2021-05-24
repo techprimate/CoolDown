@@ -5,8 +5,8 @@
 //  Copyright © techprimate GmbH & Co. KG 2020. All Rights Reserved!
 //
 
-import Quick
 import Nimble
+import Quick
 
 #if canImport(UIKit)
 import UIKit
@@ -46,7 +46,7 @@ class CDUIMapperSpec: QuickSpec {
 
                     let view = View()
                     let mapper = CDUIMapper(from: nodes)
-                    mapper.addResolver(for: TextNode.self) { node -> View in
+                    mapper.addResolver(for: TextNode.self) { _ -> View in
                         view
                     }
                     do {
