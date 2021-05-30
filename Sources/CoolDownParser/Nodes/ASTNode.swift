@@ -86,4 +86,8 @@ open class ASTNode: Hashable, CustomStringConvertible, Equatable {
     public static func codeBlock(nodes: [ASTNode]) -> CodeBlockNode {
         CodeBlockNode(nodes: nodes)
     }
+
+    public static func link(uri: String, title: String? = nil, nodes: [ASTNode]) -> LinkNode {
+        LinkNode(uri: uri, title: title, nodes: nodes)
+    }
 }

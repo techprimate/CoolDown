@@ -4,4 +4,8 @@ class FragmentText: Fragment {
     init(character: Character) {
         self.text = [character]
     }
+
+    init(characters: [Character]) {
+        self.text = characters
+    }
 }

@@ -67,13 +67,19 @@ internal class FragmentParser {
                 if character == "-" || character == "*", let listItem = parseListItem() {
                     fragmentStack.push(listItem)
                     continue
-                } else if character.isNumber, let numberItem = parseNumberedItem(character: character) {
+                }
+                // Numbered lists begin with a number
+                if character.isNumber, let numberItem = parseNumberedItem(character: character) {
                     fragmentStack.push(numberItem)
                     continue
-                } else if character == "#", let header = parseHeader() { // could be a header
+                }
+                // Headers begin with a hash tag
+                if character == "#", let header = parseHeader() { // could be a header
                     fragmentStack.push(header)
                     continue
-                } else if character == ">", let quote = parseQuote() {
+                }
+                // Quote blocks begin with a greater-than sign
+                if character == ">", let quote = parseQuote() {
                     fragmentStack.push(quote)
                     continue
                 }
@@ -84,6 +90,8 @@ internal class FragmentParser {
                 fragmentStack += parsedFragments
             } else if character == "`", let parsedFragment = parseInlineCodeBlock() {
                 fragmentStack.push(parsedFragment)
+            } else if character == "[", let parsedFragments = parseLink() {
+                fragmentStack += parsedFragments
             } else {
                 if let textFragment = fragmentStack.top as? FragmentText {
                     textFragment.text.append(character)
@@ -147,6 +155,9 @@ internal class FragmentParser {
                         result.append(.codeBlock(nodes: []))
                     }
                 }
+                contentNodes = []
+            } else if let linkNode = node as? FragmentLink {
+                result.append(.link(uri: linkNode.uri, title: linkNode.title, nodes: contentNodes))
                 contentNodes = []
             }
         }
@@ -384,5 +395,108 @@ internal class FragmentParser {
             return nil
         }
         return FragmentQuote()
+    }
+
+    private func parseLink() -> [Fragment]? {
+        // Only terminated fragments are valid
+        var hasTerminated = false
+        var rewindCount = 1
+
+        // We might find multiple nested bold/cursive combinations
+        // e.g [**bold link**]()
+        var fragments = [Fragment]()
+
+        // Characters found in current fragment
+        var characters = [Character]()
+
+        // Parsed elements
+        var link: [Character]?
+        var uri: String?
+        var title: String?
+
+        // Iterate remaining characters
+        while let character = lexer.next() {
+            rewindCount += 1
+            // If a closing bracket is found the link tag is closed
+            if character == "]" {
+                // the link content should be parsed now
+                link = characters
+                // continue with parsing the link, it needs to start with an opening parantheses
+                guard lexer.next() == "(" else {
+                    // If the next character is not an opening parantheses, it is not a valid link
+                    // Rewind to beginning of fragment
+                    lexer.rewindCharacters(count: rewindCount)
+                    return nil
+                }
+                hasTerminated = true
+                break
+            }
+            characters.append(character)
+        }
+
+        // If the while-loop exited, but no link is set, it can not be a valid link
+        guard let parsedLink = link else {
+            // Rewind to beginning of fragment
+            lexer.rewindCharacters(count: rewindCount)
+            return nil
+        }
+
+        characters = []
+
+        var isParsingTitle = false
+
+        // Parse content in paranetheses
+        while let character = lexer.next() {
+            rewindCount += 1
+            // If the character is a whitespace and a double-quote character, it contains a title
+            if character == " " && lexer.peakNext() == "\"" {
+                // skip double quote of title tag
+                _ = lexer.next()
+                rewindCount += 1
+                // set uri
+                uri = String(characters)
+                isParsingTitle = true
+                break
+            } else if character == ")" {
+                // a closing parantheses terminates the link
+                uri = String(characters)
+                break
+            }
+            characters.append(character)
+        }
+
+        // If the while-loop exited, but no uri is set, it did not terminate correctly
+        guard let parsedUri = uri else {
+            // Rewind to beginning of fragment
+            lexer.rewindCharacters(count: rewindCount)
+            return nil
+        }
+
+        if isParsingTitle {
+            hasTerminated = false
+            characters = []
+
+            while let character = lexer.next() {
+                rewindCount += 1
+                if character == "\"" && lexer.peakNext() == ")" {
+                    // skip closing parantheses
+                    _ = lexer.next()
+                    title = String(characters)
+                    hasTerminated = true
+                    break
+                }
+                characters.append(character)
+            }
+        }
+
+        // If the fragment didn't terminate correctly, it shall not be detected
+        guard hasTerminated else {
+            // Rewind to beginning of fragment
+            lexer.rewindCharacters(count: rewindCount)
+            return nil
+        }
+        fragments.insert(FragmentLink(uri: parsedUri, title: title), at: 0)
+        fragments.append(FragmentText(characters: parsedLink))
+        return fragments
     }
 }
