@@ -1,5 +1,5 @@
-import SwiftUI
 import CoolDownParser
+import SwiftUI
 
 @available(iOS 13.0, *)
 public struct CDMarkdownView: View {

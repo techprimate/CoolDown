@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MarkdownParserCacheKey: EnvironmentKey {
 
-    public static var defaultValue: CDMarkdownParserCache? = nil
+    public static var defaultValue: CDMarkdownParserCache?
 
 }
 
@@ -14,4 +14,3 @@ extension EnvironmentValues {
         set { self[MarkdownParserCacheKey.self] = newValue }
     }
 }
-

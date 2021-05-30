@@ -1,5 +1,5 @@
-import SwiftUI
 import CoolDownParser
+import SwiftUI
 
 @available(iOS 13.0, *)
 extension CDSwiftUIMapper {
@@ -19,21 +19,21 @@ extension CDSwiftUIMapper {
                 }
             }())
         }
-        mapper.addResolver(for: TextNode.self) { mapper, node in
+        mapper.addResolver(for: TextNode.self) { _, node in
             Text(node.content) // node has type TextNode
                 .fixedSize(horizontal: false, vertical: true)
         }
-        mapper.addResolver(for: BoldNode.self) { mapper, node  in
+        mapper.addResolver(for: BoldNode.self) { _, node  in
             Text(node.content)
                 .bold()
                 .fixedSize(horizontal: false, vertical: true)
         }
-        mapper.addResolver(for: CursiveNode.self) { mapper, node  in
+        mapper.addResolver(for: CursiveNode.self) { _, node  in
             Text(node.content)
                 .italic()
                 .fixedSize(horizontal: false, vertical: true)
         }
-        mapper.addResolver(for: CursiveBoldNode.self) { mapper, node  in
+        mapper.addResolver(for: CursiveBoldNode.self) { _, node  in
             Text(node.content)
                 .italic()
                 .bold()
@@ -57,13 +57,13 @@ extension CDSwiftUIMapper {
             }
         })
         mapper.addResolver(for: ParagraphNode.self, resolver: resolveParagraphNode)
-        mapper.addResolver(for: TextNode.self) { mapper, node in
+        mapper.addResolver(for: TextNode.self) { _, node in
             HStack(spacing: 0) {
                 Text(node.content)
                 Spacer()
             }
         }
-        mapper.addResolver(for: CodeNode.self) { mapper, node in
+        mapper.addResolver(for: CodeNode.self) { _, node in
             HStack(spacing: 0) {
                 Text(node.content)
                     .fixedSize(horizontal: false, vertical: true)
@@ -73,7 +73,7 @@ extension CDSwiftUIMapper {
             .background(Color(white: 0.85))
             .cornerRadius(10)
         }
-        mapper.addResolver(for: TextNodesBox.self) { mapper, node in
+        mapper.addResolver(for: TextNodesBox.self) { _, node in
                 node.nodes.compactMap { node -> Text? in
                     if let boldNode = node as? BoldNode {
                         return Text(boldNode.content).bold()
