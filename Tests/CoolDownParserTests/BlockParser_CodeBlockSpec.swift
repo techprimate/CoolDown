@@ -1,19 +1,11 @@
-//
-//  CodeBlockSpec.swift
-//  CoolDownParserTests
-//
-//  Created by Philip Niedertscheider on 16.05.21.
-//  Copyright © techprimate GmbH & Co. KG 2021. All Rights Reserved!
-//
-
 @testable import CoolDownParser
 import Nimble
 import Quick
 
-class CodeBlockSpec: QuickSpec {
+class BlockParser_CodeBlockSpec: QuickSpec {
 
     override func spec() {
-        describe("CDParser") {
+        describe("BlockParser") {
             describe("code block") {
                 context("only 4 whitespaces") {
                     it("should return empty code block") {
@@ -22,7 +14,6 @@ class CodeBlockSpec: QuickSpec {
                         let expectedNodes: [ASTNode] = [
                             .codeBlock(nodes: [])
                         ]
-
                         expect(actualNodes) == expectedNodes
                     }
                 }

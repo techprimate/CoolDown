@@ -10,7 +10,7 @@
 import Nimble
 import Quick
 
-class BoldCursiveInlineSpec: QuickSpec {
+class BlockParser_BoldCursiveInlineSpec: QuickSpec {
 
     override func spec() {
         describe("BlockParser") {
