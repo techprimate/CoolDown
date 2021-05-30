@@ -1,8 +1,8 @@
-public class ContainerNode: ASTNode {
+open class ContainerNode: ASTNode {
 
-    public internal(set) var nodes: [ASTNode]
+    public var nodes: [ASTNode]
 
-    internal init(nodes: [ASTNode]) {
+    public init(nodes: [ASTNode]) {
         self.nodes = nodes
     }
 

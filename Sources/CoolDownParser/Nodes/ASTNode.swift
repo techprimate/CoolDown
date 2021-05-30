@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ASTNode: Hashable, CustomStringConvertible, Equatable {
+open class ASTNode: Hashable, CustomStringConvertible, Equatable {
 
     // MARK: - Hashable
 

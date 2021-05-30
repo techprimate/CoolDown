@@ -17,18 +17,15 @@ public class CDSwiftUIMapper {
 
     // MARK: - Properties
 
-    private let nodes: [ASTNode]
     private var resolvers: [String: Resolver<ASTNode, AnyView>] = [:]
 
     // MARK: - Initializer
 
-    public init(from nodes: [ASTNode]) {
-        self.nodes = nodes
-    }
+    public init() {}
 
     // MARK: - Accessors
 
-    public func resolve() throws -> AnyView {
+    public func resolve(nodes: [ASTNode]) throws -> AnyView {
         AnyView(
             ForEach(nodes, id: \.self) { node in
                 self.resolve(node: node)
