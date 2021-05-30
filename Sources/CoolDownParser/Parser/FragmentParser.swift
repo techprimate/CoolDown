@@ -423,6 +423,7 @@ internal class FragmentParser {
                 link = characters
                 // continue with parsing the link, it needs to start with an opening parantheses
                 guard lexer.next() == "(" else {
+                    rewindCount += 1
                     // If the next character is not an opening parantheses, it is not a valid link
                     // Rewind to beginning of fragment
                     lexer.rewindCharacters(count: rewindCount)
@@ -443,19 +444,46 @@ internal class FragmentParser {
 
         characters = []
 
-        var isParsingTitle = false
+        var shouldParseTitle = false
+        var isEnclosedInPointyBrackets = false
+
+        // Check if uri is enclosed in pointy brackets
+        if lexer.peakNext() == "<" {
+            _ = lexer.next()
+            rewindCount += 1
+            isEnclosedInPointyBrackets = true
+        }
 
         // Parse content in paranetheses
         while let character = lexer.next() {
             rewindCount += 1
             // If the character is a whitespace and a double-quote character, it contains a title
-            if character == " " && lexer.peakNext() == "\"" {
-                // skip double quote of title tag
+            if character == " " {
+                if lexer.peakNext() == "\"" {
+                    // skip double quote of title tag
+                    _ = lexer.next()
+                    rewindCount += 1
+                    // set uri
+                    uri = String(characters)
+                    shouldParseTitle = true
+                    break
+                } else if !isEnclosedInPointyBrackets {
+                    // whitespaces are not allowed in the uri, if it is not enclosed in pointy brackets
+                    // Rewind to beginning of fragment
+                    lexer.rewindCharacters(count: rewindCount)
+                    return nil
+                }
+            } else if isEnclosedInPointyBrackets && character == ">" && lexer.peakNext() == ")" {
+                // if the closing pointy bracket is escaped, it is not valid
+                // peak back two characters, as the previous one in the lexer is current character processing
+                if lexer.peakPrevious(count: 2) == "\\" {
+                    // Rewind to beginning of fragment
+                    lexer.rewindCharacters(count: rewindCount)
+                    return nil
+                }
                 _ = lexer.next()
                 rewindCount += 1
-                // set uri
                 uri = String(characters)
-                isParsingTitle = true
                 break
             } else if character == ")" {
                 // a closing parantheses terminates the link
@@ -468,11 +496,11 @@ internal class FragmentParser {
         // If the while-loop exited, but no uri is set, it did not terminate correctly
         guard let parsedUri = uri else {
             // Rewind to beginning of fragment
-            lexer.rewindCharacters(count: rewindCount)
+            lexer.rewindCharacters(count: rewindCount + 1)
             return nil
         }
 
-        if isParsingTitle {
+        if shouldParseTitle {
             hasTerminated = false
             characters = []
 

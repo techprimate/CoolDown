@@ -211,7 +211,7 @@ class BlockParser_ListSpec: QuickSpec {
                     - Nullam **ornare** viverra *purus*, eget accumsan `leo gravida` eget.
                     - Nullam **ornare** viverra *purus*, eget accumsan `leo gravida` eget.
                     43. eget accumsan leo gravida eget
-                    1. Nullam ornare viverra purus
+                    3. Nullam ornare viverra purus
                     44. Nullam ornare viverra purus
                     * Nullam **ornare** viverra *purus*, eget accumsan `leo gravida` eget.
                     """

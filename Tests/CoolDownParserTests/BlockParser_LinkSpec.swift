@@ -8,6 +8,34 @@ class BlockParser_LinkSpec: QuickSpec {
         describe("BlockParser") {
             describe("Link") {
                 context("inline") {
+                    context("without closing bracket") {
+                        it("should not parse link") {
+                            let text = """
+                            [link(/uri)
+                            """
+                            let expectedNodes: [ASTNode] = [
+                                .paragraph(nodes: [
+                                    .text("[link(/uri)")
+                                ])
+                            ]
+                            let coolDown = CDParser(text)
+                            expect(coolDown.nodes) == expectedNodes
+                        }
+                    }
+                    context("without closing parantheses") {
+                        it("should not parse link") {
+                            let text = """
+                            [link](/uri
+                            """
+                            let expectedNodes: [ASTNode] = [
+                                .paragraph(nodes: [
+                                    .text("[link](/uri")
+                                ])
+                            ]
+                            let coolDown = CDParser(text)
+                            expect(coolDown.nodes) == expectedNodes
+                        }
+                    }
                     context("with title") {
                         it("should parse link uri and title") {
                             // based on https://spec.commonmark.org/0.29/#example-481
@@ -101,6 +129,65 @@ class BlockParser_LinkSpec: QuickSpec {
                                     let expectedNodes: [ASTNode] = [
                                         .link(uri: "/my uri", title: nil, nodes: [
                                             .text("link")
+                                        ])
+                                    ]
+
+                                    let coolDown = CDParser(text)
+                                    expect(coolDown.nodes) == expectedNodes
+                                }
+
+                                it("needs to unescaped") {
+                                    // based on https://spec.commonmark.org/0.29/#example-490
+                                    let text = """
+                                    [link](</my uri\\>)
+                                    """
+                                    let expectedNodes: [ASTNode] = [
+                                        .paragraph(nodes: [
+                                            .text("[link](</my uri\\>)")
+                                        ])
+                                    ]
+
+                                    let coolDown = CDParser(text)
+                                    expect(coolDown.nodes) == expectedNodes
+                                }
+                            }
+                        }
+
+                        context("line breaks in uri") {
+                            context("without brackets") {
+                                it("should not be parsed as link") {
+                                    // based on https://spec.commonmark.org/0.29/#example-487
+                                    let text = """
+                                    [link](/my
+                                    uri)
+                                    """
+                                    let expectedNodes: [ASTNode] = [
+                                        .paragraph(nodes: [
+                                            .text("[link](/my"),
+                                        ]),
+                                        .paragraph(nodes: [
+                                            .text("uri)")
+                                        ])
+                                    ]
+
+                                    let coolDown = CDParser(text)
+                                    expect(coolDown.nodes) == expectedNodes
+                                }
+                            }
+
+                            context("with brackets") {
+                                it("should not be parsed as link") {
+                                    // based on https://spec.commonmark.org/0.29/#example-488
+                                    let text = """
+                                    [link](</my
+                                    uri>)
+                                    """
+                                    let expectedNodes: [ASTNode] = [
+                                        .paragraph(nodes: [
+                                            .text("[link](</my"),
+                                        ]),
+                                        .paragraph(nodes: [
+                                            .text("uri>)")
                                         ])
                                     ]
 
