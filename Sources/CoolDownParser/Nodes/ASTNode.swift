@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class ASTNode: Hashable, CustomStringConvertible, Equatable {
+open class ASTNode: CustomStringConvertible, Equatable, Hashable {
 
     // MARK: - Hashable
 
@@ -25,16 +25,24 @@ open class ASTNode: Hashable, CustomStringConvertible, Equatable {
     // MARK: - Equatable
 
     public static func == (lhs: ASTNode, rhs: ASTNode) -> Bool {
-        if type(of: lhs) == type(of: rhs), let lhsNode = lhs as? ContainerNode, let rhsNode = rhs as? ContainerNode {
-            return lhsNode.nodes == rhsNode.nodes
+        switch (lhs, rhs) {
+        case let (lhs as TextNode, rhs as TextNode):
+            return lhs.equals(other: rhs)
+        case let (lhs as NumberedNode, rhs as NumberedNode):
+            return lhs.equals(other: rhs)
+        case let (lhs as LinkNode, rhs as LinkNode):
+            return lhs.equals(other: rhs)
+        case let (lhs as HeaderNode, rhs as HeaderNode):
+            return lhs.equals(other: rhs)
+        case let (lhs as ContainerNode, rhs as ContainerNode):
+            return lhs.equals(other: rhs)
+        default:
+            return false
         }
-        if type(of: lhs) == type(of: rhs), let lhsNode = lhs as? TextNode, let rhsNode = rhs as? TextNode {
-            return lhsNode.content == rhsNode.content
-        }
-        if let lhsNode = lhs as? HeaderNode, let rhsNode = rhs as? HeaderNode {
-            return lhsNode.depth == rhsNode.depth && lhsNode.nodes == rhsNode.nodes
-        }
-        return false
+    }
+
+    open func equals(other: AnyObject) -> Bool {
+        type(of: self).self === type(of: other).self
     }
 
     // MARK: - Generators
@@ -90,4 +98,17 @@ open class ASTNode: Hashable, CustomStringConvertible, Equatable {
     public static func link(uri: String, title: String? = nil, nodes: [ASTNode]) -> LinkNode {
         LinkNode(uri: uri, title: title, nodes: nodes)
     }
+}
+
+public protocol AnyEquatable {
+    func equals(other: AnyEquatable) -> Bool
+    func canEqualReverseDispatch(other: AnyEquatable) -> Bool
+}
+
+public func == (lhs: AnyEquatable, rhs: AnyEquatable) -> Bool {
+    lhs.equals(other: rhs)
+}
+
+public func != (lhs: AnyEquatable, rhs: AnyEquatable) -> Bool {
+    !lhs.equals(other: rhs)
 }

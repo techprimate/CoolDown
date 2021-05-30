@@ -14,7 +14,17 @@ open class ContainerNode: ASTNode {
             + "\n}"
     }
 
-    override public func hash(into hasher: inout Hasher) {
+    // MARK: - Hashable
+
+    public override func hash(into hasher: inout Hasher) {
         nodes.hash(into: &hasher)
+    }
+
+    // MARK: - Equatable
+
+    public override func equals(other: AnyObject) -> Bool {
+        guard super.equals(other: other) else { return false }
+        guard let other = other as? Self else { return false }
+        return self.nodes == other.nodes
     }
 }
