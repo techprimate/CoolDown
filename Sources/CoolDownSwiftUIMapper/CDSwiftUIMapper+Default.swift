@@ -109,6 +109,13 @@ extension CDSwiftUIMapper {
                 }
             }
         }
+        mapper.addResolver(for: LinkNode.self) { mapper, node in
+            Button(action: {}) {
+                ForEach(node.nodes, id: \.self) { node in
+                    mapper.resolve(node: node)
+                }
+            }
+        }
         return mapper
     }()
 
