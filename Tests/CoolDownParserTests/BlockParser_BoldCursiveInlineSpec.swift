@@ -209,7 +209,7 @@ class BlockParser_BoldCursiveInlineSpec: QuickSpec {
 
                 context("at start") {
                     it("should return both elements") {
-                        let text = "***cursive* in bold*"
+                        let text = "***cursive* in bold**"
                         let actualNodes = CDParser(text).nodes
                         let expectedNodes: [ASTNode] = [
                             .paragraph(nodes: [

@@ -90,6 +90,8 @@ internal class FragmentParser {
                 fragmentStack += parsedFragments
             } else if character == "`", let parsedFragment = parseInlineCodeBlock() {
                 fragmentStack.push(parsedFragment)
+            } else if character == "!" && lexer.peakNext() == "[", let parsedFragments = parseImage() {
+                fragmentStack += parsedFragments
             } else if character == "[", let parsedFragments = parseLink() {
                 fragmentStack += parsedFragments
             } else {
@@ -159,6 +161,9 @@ internal class FragmentParser {
             } else if let linkNode = node as? FragmentLink {
                 result.append(.link(uri: linkNode.uri, title: linkNode.title, nodes: contentNodes))
                 contentNodes = []
+            } else if let imageNode = node as? FragmentImage {
+                result.append(.image(uri: imageNode.uri, title: imageNode.title, nodes: contentNodes))
+                contentNodes = []
             }
         }
         if !contentNodes.isEmpty {
@@ -210,8 +215,17 @@ internal class FragmentParser {
         // We linearly scan all characters, so we need to track if we are another level deeper
         var isNested = false
 
+        enum Marker {
+            case bold
+            case cursive
+        }
+
+        var markers: [Marker] = [.cursive]
+
         // If an asteriks follows another one (**), it must at least be bold.
         if nextCharacter == "*" {
+            markers = [.bold]
+
             // Skip second asteriks
             _ = lexer.next()
             rewindCount += 1
@@ -221,15 +235,19 @@ internal class FragmentParser {
                 rewindCount += 1
                 // If another asteriks is found, it can either terminate the current bold text, or it can be a nested cursive.
                 if character == "*" {
+                    if markers.last == .cursive {
+                        fragments.append(FragmentCursive(characters: characters))
+                        characters = []
+                        markers = markers.dropLast()
+                    } else if isNested {
                     // If we are in a nested cursive block, this asteriks terminates the block
-                    if isNested {
                         fragments.append(FragmentBoldCursive(characters: characters))
                         // Reset the scanned characters, as we have added them
                         characters = []
                         // We are exiting the nested block, reset tracking flag
                         isNested = false
                         continue
-                    } else if lexer.peakNext() == "*" { // Two asteriks following each other terminate the bold statement
+                    } else if lexer.peakNext() == "*" && markers.contains(.bold) { // Two asteriks following each other terminate the bold statement
                         // Two subseeding asteriks terminates the statement
                         _ = lexer.next()
                         rewindCount += 1
@@ -241,7 +259,6 @@ internal class FragmentParser {
                         }
                         break
                     } else { // We might have found another valid cursive block
-
                         // If the bold block immediately begins with a cursive block, don't add the empty block
                         if !characters.isEmpty {
                             fragments.append(FragmentBold(characters: characters))
@@ -267,61 +284,60 @@ internal class FragmentParser {
                 fragments.append(FragmentBold(characters: characters))
             }
             return fragments
-        } else {
+        }
 
-            // Iterate remaining characters
-            while let character = lexer.next() {
-                rewindCount += 1
+        // Iterate remaining characters
+        while let character = lexer.next() {
+            rewindCount += 1
 
-                // If another asteriks is found, it can either terminate the current cursive text, or it can be a nested bold.
-                if character == "*" {
-                    // Two adjacent asteriks are found, this can be the beginning or the end of a nested bold block
-                    if lexer.peakNext() == "*" {
-                        // Skip next character
-                        _ = lexer.next()
-                        // If we are already in a nested block, this is the end of the nested block
-                        if isNested {
-                            fragments.append(FragmentBoldCursive(characters: characters))
-                            // Reset the scanned characters, as we have added them
-                            characters = []
-                            // We are exiting the nested block, reset tracking flag
-                            isNested = false
-                            continue
-                        }
-                        fragments.append(FragmentCursive(characters: characters))
+            // If another asteriks is found, it can either terminate the current cursive text, or it can be a nested bold.
+            if character == "*" {
+                // Two adjacent asteriks are found, this can be the beginning or the end of a nested bold block
+                if lexer.peakNext() == "*" {
+                    // Skip next character
+                    _ = lexer.next()
+                    // If we are already in a nested block, this is the end of the nested block
+                    if isNested {
+                        fragments.append(FragmentBoldCursive(characters: characters))
                         // Reset the scanned characters, as we have added them
                         characters = []
-                        // We are entering a nested block
-                        isNested = true
+                        // We are exiting the nested block, reset tracking flag
+                        isNested = false
                         continue
                     }
-                    // a single asteriks terminates the block
-                    // but if it is currently in a nested block, that means that the nested block does not terminate correctly, e.g. *cursive **bad block*
-                    if isNested {
-                        // we cancel the nested block and keep going
-                        isNested = false
-                        if let lastCursive = fragments.last as? FragmentCursive {
-                            // If there is another cursive fragment in the list, append the characters
-                            fragments[fragments.count - 1] = FragmentCursive(characters: lastCursive.text + ["*", "*"] + characters)
-                            characters = []
-                        }
-                    }
-                    // Terminating symbol found
-                    hasTerminated = true
-                    break
+                    fragments.append(FragmentCursive(characters: characters))
+                    // Reset the scanned characters, as we have added them
+                    characters = []
+                    // We are entering a nested block
+                    isNested = true
+                    continue
                 }
-                characters.append(character)
+                // a single asteriks terminates the block
+                // but if it is currently in a nested block, that means that the nested block does not terminate correctly, e.g. *cursive **bad block*
+                if isNested {
+                    // we cancel the nested block and keep going
+                    isNested = false
+                    if let lastCursive = fragments.last as? FragmentCursive {
+                        // If there is another cursive fragment in the list, append the characters
+                        fragments[fragments.count - 1] = FragmentCursive(characters: lastCursive.text + ["*", "*"] + characters)
+                        characters = []
+                    }
+                }
+                // Terminating symbol found
+                hasTerminated = true
+                break
             }
-            // If the fragment didn't terminate correctly, it shall not be detected
-            guard hasTerminated else {
-                // Rewind to beginning of fragment
-                lexer.rewindCharacters(count: rewindCount)
-                return nil
-            }
-            if !characters.isEmpty {
-                // If the bold block immediately begins with a cursive block, don't add the empty block
-                fragments.append(FragmentCursive(characters: characters))
-            }
+            characters.append(character)
+        }
+        // If the fragment didn't terminate correctly, it shall not be detected
+        guard hasTerminated else {
+            // Rewind to beginning of fragment
+            lexer.rewindCharacters(count: rewindCount)
+            return nil
+        }
+        if !characters.isEmpty {
+            // If the bold block immediately begins with a cursive block, don't add the empty block
+            fragments.append(FragmentCursive(characters: characters))
         }
         return fragments
     }
@@ -397,7 +413,27 @@ internal class FragmentParser {
         return FragmentQuote()
     }
 
+    private func parseImage() -> [Fragment]? {
+        _ = lexer.next()
+        guard let (fragments, uri, title) = parseLinkFormatHelper() else {
+            lexer.rewindCharacter()
+            return nil
+        }
+        var frags = fragments
+        frags.insert(FragmentImage(uri: uri, title: title), at: 0)
+        return frags
+    }
+
     private func parseLink() -> [Fragment]? {
+        guard let (fragments, uri, title) = parseLinkFormatHelper() else {
+            return nil
+        }
+        var frags = fragments
+        frags.insert(FragmentLink(uri: uri, title: title), at: 0)
+        return frags
+    }
+
+    private func parseLinkFormatHelper() -> (fragments: [Fragment], uri: String, title: String?)? {
         // Only terminated fragments are valid
         var hasTerminated = false
         var rewindCount = 1
@@ -523,8 +559,7 @@ internal class FragmentParser {
             lexer.rewindCharacters(count: rewindCount)
             return nil
         }
-        fragments.insert(FragmentLink(uri: parsedUri, title: title), at: 0)
         fragments.append(FragmentText(characters: parsedLink))
-        return fragments
+        return (fragments: fragments, uri: parsedUri, title: title)
     }
 }

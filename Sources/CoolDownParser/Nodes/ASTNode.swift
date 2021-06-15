@@ -98,6 +98,10 @@ open class ASTNode: CustomStringConvertible, Equatable, Hashable {
     public static func link(uri: String, title: String? = nil, nodes: [ASTNode]) -> LinkNode {
         LinkNode(uri: uri, title: title, nodes: nodes)
     }
+
+    public static func image(uri: String, title: String? = nil, nodes: [ASTNode]) -> ImageNode {
+        ImageNode(uri: uri, title: title, nodes: nodes)
+    }
 }
 
 public protocol AnyEquatable {
