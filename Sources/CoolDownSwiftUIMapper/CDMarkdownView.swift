@@ -15,10 +15,17 @@ public struct CDMarkdownView: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            content
+        if #available(iOS 14.0, *) {
+            LazyVStack(alignment: .leading, spacing: 10) {
+                content
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            VStack(alignment: .leading, spacing: 10) {
+                content
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     var content: some View {
@@ -31,7 +38,8 @@ public struct CDMarkdownView: View {
                 cache?.set(parser.nodes, forText: text)
                 nodes = parser.nodes
             }
-            return try mapper.resolve(nodes: nodes)
+            let transformed = CDSwiftUIMapper.transform(nodes: nodes)
+            return try mapper.resolve(nodes: transformed)
         } catch {
             return AnyView(Text(error.localizedDescription))
         }
@@ -43,3 +51,4 @@ public struct CDMarkdownView: View {
         self.environment(\.markdownParserCache, cache)
     }
 }
+

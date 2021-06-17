@@ -9,10 +9,8 @@
 import CoolDownParser
 import SwiftUI
 
-@available(iOS 13.0, *)
 public typealias Resolver<Node: ASTNode, Result> = (Node) -> Result
 
-@available(iOS 13.0, *)
 public class CDSwiftUIMapper {
 
     // MARK: - Properties

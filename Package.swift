@@ -1,11 +1,11 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
     name: "CoolDown",
     platforms: [
-        .iOS(.v11), .macOS(.v10_15)
+        .iOS(.v13), .macOS(.v10_15)
     ],
     products: [
         .library(name: "CoolDown", targets: ["CoolDownParser"]),
@@ -15,7 +15,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "2.2.0")),
-        .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "8.0.7"))
+        .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "8.0.7")),
+        .package(url: "https://github.com/onevcat/Kingfisher", .upToNextMajor(from: "6.0.0")) 
     ],
     targets: [
         .target(name: "CoolDownParser"),
@@ -41,7 +42,8 @@ let package = Package(
             "Nimble"
         ]),
         .target(name: "CoolDownSwiftUIMapper", dependencies: [
-            "CoolDownParser"
+            "CoolDownParser",
+            "Kingfisher"
         ])
     ]
 )
