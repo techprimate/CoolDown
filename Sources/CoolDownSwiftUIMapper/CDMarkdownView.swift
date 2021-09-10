@@ -1,7 +1,6 @@
 import CoolDownParser
 import SwiftUI
 
-@available(iOS 13.0, *)
 public struct CDMarkdownView<Content: View>: View {
 
     @Environment(\.markdownParserCache) var cache
@@ -15,7 +14,7 @@ public struct CDMarkdownView<Content: View>: View {
     }
 
     public var body: some View {
-        if #available(iOS 14.0, *) {
+        if #available(iOS 14.0, macOS 11.0, *) {
             LazyVStack(alignment: .leading, spacing: 10) {
                 content(transformedNodes)
             }
