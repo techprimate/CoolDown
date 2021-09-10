@@ -23,19 +23,18 @@ public class CDSwiftUIMapper {
 
     // MARK: - Accessors
 
-    public func resolve(nodes: [ASTNode]) throws -> AnyView {
-        AnyView(
-            ForEach(nodes, id: \.self) { node in
-                self.resolve(node: node)
-            }
-        )
+    public func resolve(nodes: [ASTNode]) -> some View {
+        ForEach(nodes, id: \.self) { node in
+            self.resolve(node: node)
+        }
     }
 
-    public func resolve(node: ASTNode) -> AnyView {
-        do {
-            return try NodeMapper.map(node: node, resolvers: self.resolvers)
-        } catch {
-            return AnyView(Text(error.localizedDescription))
+    @ViewBuilder
+    public func resolve(node: ASTNode) -> some View {
+        if let resolver = resolvers[String(describing: type(of: node))] {
+            resolver(node)
+        } else {
+            Text("Missing resolver for node: \(node.description)")
         }
     }
 

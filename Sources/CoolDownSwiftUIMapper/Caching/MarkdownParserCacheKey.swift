@@ -9,7 +9,7 @@ struct MarkdownParserCacheKey: EnvironmentKey {
 @available(iOS 13.0, *)
 extension EnvironmentValues {
 
-    var markdownParserCache: CDMarkdownParserCache? {
+    public var markdownParserCache: CDMarkdownParserCache? {
         get { self[MarkdownParserCacheKey.self] }
         set { self[MarkdownParserCacheKey.self] = newValue }
     }
