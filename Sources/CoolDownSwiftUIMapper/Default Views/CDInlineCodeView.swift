@@ -14,6 +14,7 @@ struct CDInlineCodeView: View {
 
     var body: some View {
         Text(node.content)
+            .foregroundColor(Color.black)
             .padding(2)
             .background(Color(white: 0.85))
     }

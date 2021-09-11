@@ -27,6 +27,7 @@ struct CDTextBoxView: View {
             }
             return nil
         }.reduce(Text(""), +)
+        .foregroundColor(Color.black)
     }
 }
 

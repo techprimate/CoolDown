@@ -16,6 +16,7 @@ struct CDListBulletItemView: View {
     var body: some View {
         HStack(alignment: .top) {
             Text("·")
+                .foregroundColor(Color.black)
             VStack(alignment: .leading) {
                 CDNodesResolverView(parentIndex: index, nodes: node.nodes)
             }

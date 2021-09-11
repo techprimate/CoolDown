@@ -60,23 +60,27 @@ struct CDNodeResolverView: View {
 
     private func resolveText(node: TextNode) -> some View {
         Text(node.content)
+            .foregroundColor(Color.black)
             .fixedSize(horizontal: false, vertical: true)
     }
 
     private func resolveBold(node: BoldNode) -> some View {
         Text(node.content)
+            .foregroundColor(Color.black)
             .bold()
             .fixedSize(horizontal: false, vertical: true)
     }
 
     private func resolveCursive(node: CursiveNode) -> some View {
         Text(node.content)
+            .foregroundColor(Color.black)
             .italic()
             .fixedSize(horizontal: false, vertical: true)
     }
 
     private func resolveCursiveBold(node: CursiveBoldNode) -> some View {
         Text(node.content)
+            .foregroundColor(Color.black)
             .italic()
             .bold()
             .fixedSize(horizontal: false, vertical: true)
