@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "2.2.0")),
         .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "8.0.7")),
-        .package(url: "https://github.com/onevcat/Kingfisher", .upToNextMajor(from: "6.0.0")) 
+        .package(url: "https://github.com/onevcat/Kingfisher", .upToNextMajor(from: "6.0.0"))
     ],
     targets: [
         .target(name: "CoolDownParser"),

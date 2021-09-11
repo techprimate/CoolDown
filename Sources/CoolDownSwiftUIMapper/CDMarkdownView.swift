@@ -37,7 +37,7 @@ public struct CDMarkdownView<Content: View>: View {
             nodes = parser.nodes
         }
         return CDSwiftUIMapper.transform(nodes: nodes).enumerated().map { index, node in
-            IndexASTNode(index: index, node: node)
+            IndexASTNode(index: .leaf(index), node: node)
         }
     }
 
@@ -45,15 +45,5 @@ public struct CDMarkdownView<Content: View>: View {
 
     public func useCache(cache: CDMarkdownParserCache = .shared) -> some View {
         self.environment(\.markdownParserCache, cache)
-    }
-}
-
-public struct IndexASTNode: Hashable, Identifiable {
-
-    public let index: Int
-    public let node: ASTNode
-
-    public var id: String {
-        index.description + "-" + node.description
     }
 }

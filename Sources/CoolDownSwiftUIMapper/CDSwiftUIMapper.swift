@@ -9,43 +9,30 @@
 import CoolDownParser
 import SwiftUI
 
-public typealias Resolver<Node: ASTNode, Result> = (Node) -> Result
-
 public class CDSwiftUIMapper {
 
-    // MARK: - Properties
-
-    private var resolvers: [String: Resolver<ASTNode, AnyView>] = [:]
-
-    // MARK: - Initializer
-
-    public init() {}
-
-    // MARK: - Accessors
-
-    public func resolve(nodes: [ASTNode]) -> some View {
-        ForEach(nodes, id: \.self) { node in
-            self.resolve(node: node)
-        }
-    }
-
-    @ViewBuilder
-    public func resolve(node: ASTNode) -> some View {
-        if let resolver = resolvers[String(describing: type(of: node))] {
-            resolver(node)
-        } else {
-            Text("Missing resolver for node: \(node.description)")
-        }
-    }
-
-    // MARK: - Modifiers
-
-    public func addResolver<Node: ASTNode, ElementView: View>(for nodeType: Node.Type, resolver: @escaping (CDSwiftUIMapper, Node) -> ElementView) {
-        resolvers[String(describing: nodeType)] = { node in
-            guard let node = node as? Node else {
-                fatalError("Internal resolver mismatch, expected node type does not match modifier type")
+    static func transform(nodes: [ASTNode]) -> [ASTNode] {
+        var transformedNodes: [ASTNode] = []
+        for node in nodes {
+            if let textNode = node as? TextNode {
+                if let prev = transformedNodes.last as? TextNodesBox {
+                    transformedNodes[transformedNodes.count - 1] = TextNodesBox(nodes: prev.nodes + [textNode])
+                } else {
+                    transformedNodes.append(TextNodesBox(nodes: [textNode]))
+                }
+            } else if let container = node as? ContainerNode {
+                container.nodes = transform(nodes: container.nodes)
+                transformedNodes.append(container)
+            } else {
+                transformedNodes.append(node)
             }
-            return AnyView(resolver(self, node))
         }
+        return transformedNodes
+    }
+
+    static func transformToIndex(parentIndex: CDIndexNode, nodes: [ASTNode]) -> [IndexASTNode] {
+        Array(nodes.enumerated().map { index, node in
+            IndexASTNode(index: .nested(parent: parentIndex, index: index), node: node)
+        })
     }
 }
