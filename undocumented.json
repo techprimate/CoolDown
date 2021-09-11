@@ -1,0 +1,460 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 11,
+      "symbol": "ASTNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 44,
+      "symbol": "ASTNode.equals(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 50,
+      "symbol": "ASTNode.paragraph(nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 54,
+      "symbol": "ASTNode.header(depth:nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 58,
+      "symbol": "ASTNode.cursive(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 62,
+      "symbol": "ASTNode.bold(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 66,
+      "symbol": "ASTNode.cursiveBold(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 70,
+      "symbol": "ASTNode.text(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 74,
+      "symbol": "ASTNode.code(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 78,
+      "symbol": "ASTNode.list(nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 82,
+      "symbol": "ASTNode.bullet(nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 86,
+      "symbol": "ASTNode.numbered(index:nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 90,
+      "symbol": "ASTNode.quote(nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 94,
+      "symbol": "ASTNode.codeBlock(nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 98,
+      "symbol": "ASTNode.link(uri:title:nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 102,
+      "symbol": "ASTNode.image(uri:title:nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 107,
+      "symbol": "AnyEquatable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 108,
+      "symbol": "AnyEquatable.equals(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 109,
+      "symbol": "AnyEquatable.canEqualReverseDispatch(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 112,
+      "symbol": "==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ASTNode.swift",
+      "line": 116,
+      "symbol": "!=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/BoldNode.swift",
+      "line": 1,
+      "symbol": "BoldNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/BulletNode.swift",
+      "line": 1,
+      "symbol": "BulletNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/CodeBlockNode.swift",
+      "line": 1,
+      "symbol": "CodeBlockNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/CodeNode.swift",
+      "line": 1,
+      "symbol": "CodeNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ContainerNode.swift",
+      "line": 1,
+      "symbol": "ContainerNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ContainerNode.swift",
+      "line": 3,
+      "symbol": "ContainerNode.nodes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ContainerNode.swift",
+      "line": 5,
+      "symbol": "ContainerNode.init(nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ContainerNode.swift",
+      "line": 11,
+      "symbol": "ContainerNode.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ContainerNode.swift",
+      "line": 19,
+      "symbol": "ContainerNode.hash(into:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ContainerNode.swift",
+      "line": 25,
+      "symbol": "ContainerNode.equals(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/CursiveBoldNode.swift",
+      "line": 1,
+      "symbol": "CursiveBoldNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/CursiveNode.swift",
+      "line": 1,
+      "symbol": "CursiveNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/HeaderNode.swift",
+      "line": 1,
+      "symbol": "HeaderNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/HeaderNode.swift",
+      "line": 3,
+      "symbol": "HeaderNode.depth",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/HeaderNode.swift",
+      "line": 12,
+      "symbol": "HeaderNode.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/HeaderNode.swift",
+      "line": 20,
+      "symbol": "HeaderNode.hash(into:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/HeaderNode.swift",
+      "line": 27,
+      "symbol": "HeaderNode.equals(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ImageNode.swift",
+      "line": 1,
+      "symbol": "ImageNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ImageNode.swift",
+      "line": 3,
+      "symbol": "ImageNode.uri",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ImageNode.swift",
+      "line": 4,
+      "symbol": "ImageNode.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ImageNode.swift",
+      "line": 6,
+      "symbol": "ImageNode.init(uri:title:nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ImageNode.swift",
+      "line": 14,
+      "symbol": "ImageNode.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ImageNode.swift",
+      "line": 25,
+      "symbol": "ImageNode.hash(into:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ImageNode.swift",
+      "line": 33,
+      "symbol": "ImageNode.equals(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/LinkNode.swift",
+      "line": 1,
+      "symbol": "LinkNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/LinkNode.swift",
+      "line": 3,
+      "symbol": "LinkNode.uri",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/LinkNode.swift",
+      "line": 4,
+      "symbol": "LinkNode.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/LinkNode.swift",
+      "line": 6,
+      "symbol": "LinkNode.init(uri:title:nodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/LinkNode.swift",
+      "line": 14,
+      "symbol": "LinkNode.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/LinkNode.swift",
+      "line": 25,
+      "symbol": "LinkNode.hash(into:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/LinkNode.swift",
+      "line": 33,
+      "symbol": "LinkNode.equals(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ListNode.swift",
+      "line": 1,
+      "symbol": "ListNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/NumberedNode.swift",
+      "line": 1,
+      "symbol": "NumberedNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/NumberedNode.swift",
+      "line": 3,
+      "symbol": "NumberedNode.index",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/NumberedNode.swift",
+      "line": 12,
+      "symbol": "NumberedNode.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/NumberedNode.swift",
+      "line": 20,
+      "symbol": "NumberedNode.hash(into:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/NumberedNode.swift",
+      "line": 27,
+      "symbol": "NumberedNode.equals(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/ParagraphNode.swift",
+      "line": 1,
+      "symbol": "ParagraphNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/QuoteNode.swift",
+      "line": 1,
+      "symbol": "QuoteNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/TextNode.swift",
+      "line": 1,
+      "symbol": "TextNode",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/TextNode.swift",
+      "line": 3,
+      "symbol": "TextNode.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/TextNode.swift",
+      "line": 11,
+      "symbol": "TextNode.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/TextNode.swift",
+      "line": 17,
+      "symbol": "TextNode.hash(into:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/CoolDown/CoolDown/Sources/CoolDownParser/Nodes/TextNode.swift",
+      "line": 23,
+      "symbol": "TextNode.equals(other:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/runner/work/CoolDown/CoolDown"
+}
