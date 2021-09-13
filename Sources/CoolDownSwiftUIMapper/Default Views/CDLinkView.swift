@@ -1,22 +1,24 @@
-//
-//  SwiftUIView.swift
-//  
-//
-//  Created by Philip Niedertscheider on 11.09.21.
-//
-
 import SwiftUI
 import CoolDownParser
 
 struct CDLinkView: View {
 
+    @Environment(\.cooldownLinkAction) var action
+
     let index: CDIndexNode
     let node: LinkNode
 
     var body: some View {
-        Button(action: {}) {
+        Button(action: didTapLinkAction) {
             CDNodesResolverView(parentIndex: index, nodes: node.nodes)
         }
+    }
+
+    private func didTapLinkAction() {
+        guard let action = action else {
+            return
+        }
+        action(node)
     }
 }
 

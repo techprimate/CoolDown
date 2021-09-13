@@ -4,7 +4,7 @@ import RainbowSwiftUI
 
 public struct CDMarkdownView<Content: View>: View {
 
-    @Environment(\.markdownParserCache) var cache
+    @Environment(\.cooldownParserCache) var cache
 
     let text: String
     let content: ([IndexASTNode]) -> Content
@@ -49,6 +49,6 @@ public struct CDMarkdownView<Content: View>: View {
     // MARK: - Configuration
 
     public func useCache(cache: CDMarkdownParserCache = .shared) -> some View {
-        self.environment(\.markdownParserCache, cache)
+        self.environment(\.cooldownParserCache, cache)
     }
 }

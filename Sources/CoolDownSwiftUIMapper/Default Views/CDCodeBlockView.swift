@@ -1,10 +1,3 @@
-//
-//  CDCodeBlockView.swift
-//  
-//
-//  Created by Philip Niedertscheider on 11.09.21.
-//
-
 import SwiftUI
 import CoolDownParser
 
