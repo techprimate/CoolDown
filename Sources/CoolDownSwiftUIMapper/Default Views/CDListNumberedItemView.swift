@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoolDownParser
+import RainbowSwiftUI
 
 struct CDListNumberedItemView: View {
 
@@ -16,7 +17,7 @@ struct CDListNumberedItemView: View {
     var body: some View {
         HStack(alignment: .top) {
             Text("\(node.index).")
-                .foregroundColor(Color.black)
+                .foregroundColor(Color.label)
             VStack(alignment: .leading) {
                 CDNodesResolverView(parentIndex: index, nodes: node.nodes)
             }

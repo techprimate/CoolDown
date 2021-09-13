@@ -1,12 +1,6 @@
-//
-//  CDInlineCodeView.swift
-//  
-//
-//  Created by Philip Niedertscheider on 11.09.21.
-//
-
 import SwiftUI
 import CoolDownParser
+import RainbowSwiftUI
 
 struct CDInlineCodeView: View {
 
@@ -14,7 +8,7 @@ struct CDInlineCodeView: View {
 
     var body: some View {
         Text(node.content)
-            .foregroundColor(Color.black)
+            .foregroundColor(Color.label)
             .padding(2)
             .background(Color(white: 0.85))
     }

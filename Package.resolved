@@ -27,6 +27,15 @@
           "revision": "09b3becb37cb2163919a3842a4c5fa6ec7130792",
           "version": "2.2.1"
         }
+      },
+      {
+        "package": "Rainbow",
+        "repositoryURL": "https://github.com/philprime/Rainbow",
+        "state": {
+          "branch": null,
+          "revision": "9c3ddc792a03ccfd5d3ab80896fb332c512aac06",
+          "version": "0.0.4"
+        }
       }
     ]
   },

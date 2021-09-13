@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoolDownParser
+import RainbowSwiftUI
 
 struct CDQuoteView: View {
 
@@ -15,7 +16,7 @@ struct CDQuoteView: View {
     var body: some View {
         HStack {
             Rectangle()
-                .fill(Color.black)
+                .fill(Color.label)
                 .frame(width: 5)
             VStack(alignment: .leading) {
                 CDNodesResolverView(parentIndex: .root, nodes: node.nodes)

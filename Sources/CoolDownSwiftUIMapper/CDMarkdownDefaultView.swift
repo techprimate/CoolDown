@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoolDownParser
+import RainbowSwiftUI
 
 public struct CDMarkdownDefaultView: View {
 
@@ -36,9 +37,18 @@ struct CDMarkdownDefaultView_Previews: PreviewProvider {
     """
 
     static var previews: some View {
+        Group {
+            preview
+                .colorScheme(.light)
+            preview
+                .colorScheme(.dark)
+        }
+    }
+
+    static var preview: some View {
         ScrollView {
             CDMarkdownDefaultView(text: text)
-                .padding()
         }
+        .background(Color.systemBackground)
     }
 }

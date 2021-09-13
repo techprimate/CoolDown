@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoolDownParser
+import RainbowSwiftUI
 
 struct CDTextBoxView: View {
 
@@ -27,7 +28,7 @@ struct CDTextBoxView: View {
             }
             return nil
         }.reduce(Text(""), +)
-        .foregroundColor(Color.black)
+        .foregroundColor(Color.label)
     }
 }
 

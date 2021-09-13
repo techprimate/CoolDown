@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoolDownParser
+import RainbowSwiftUI
 
 struct CDNodeResolverView: View {
 
@@ -60,27 +61,27 @@ struct CDNodeResolverView: View {
 
     private func resolveText(node: TextNode) -> some View {
         Text(node.content)
-            .foregroundColor(Color.black)
+            .foregroundColor(Color.label)
             .fixedSize(horizontal: false, vertical: true)
     }
 
     private func resolveBold(node: BoldNode) -> some View {
         Text(node.content)
-            .foregroundColor(Color.black)
+            .foregroundColor(Color.label)
             .bold()
             .fixedSize(horizontal: false, vertical: true)
     }
 
     private func resolveCursive(node: CursiveNode) -> some View {
         Text(node.content)
-            .foregroundColor(Color.black)
+            .foregroundColor(Color.label)
             .italic()
             .fixedSize(horizontal: false, vertical: true)
     }
 
     private func resolveCursiveBold(node: CursiveBoldNode) -> some View {
         Text(node.content)
-            .foregroundColor(Color.black)
+            .foregroundColor(Color.label)
             .italic()
             .bold()
             .fixedSize(horizontal: false, vertical: true)

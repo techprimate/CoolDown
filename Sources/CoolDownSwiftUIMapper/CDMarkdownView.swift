@@ -1,5 +1,6 @@
 import CoolDownParser
 import SwiftUI
+import RainbowSwiftUI
 
 public struct CDMarkdownView<Content: View>: View {
 
@@ -19,11 +20,15 @@ public struct CDMarkdownView<Content: View>: View {
                 content(transformedNodes)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
+            .background(Color.systemBackground)
         } else {
             VStack(alignment: .leading, spacing: 10) {
                 content(transformedNodes)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
+            .background(Color.systemBackground)
         }
     }
 
