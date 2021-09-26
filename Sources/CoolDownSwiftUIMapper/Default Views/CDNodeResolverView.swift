@@ -4,8 +4,13 @@ import RainbowSwiftUI
 
 struct CDNodeResolverView: View {
 
+    // MARK: - State
+
     let node: IndexASTNode
 
+    // MARK: - Content
+
+    @ViewBuilder
     var body: some View {
         content
             .id(node.id)

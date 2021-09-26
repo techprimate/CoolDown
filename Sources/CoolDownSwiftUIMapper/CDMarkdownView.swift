@@ -4,15 +4,23 @@ import RainbowSwiftUI
 
 public struct CDMarkdownView<Content: View>: View {
 
+    // MARK: - Environment
+
     @Environment(\.cooldownParserCache) var cache
+
+    // MARK: - State
 
     let text: String
     let content: ([IndexASTNode]) -> Content
+
+    // MARK: - Initializer
 
     public init(text: String, @ViewBuilder content: @escaping ([IndexASTNode]) -> Content) {
         self.text = text
         self.content = content
     }
+
+    // MARK: - Content
 
     public var body: some View {
         if #available(iOS 14.0, macOS 11.0, *) {

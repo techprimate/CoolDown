@@ -7,7 +7,12 @@ struct CDTextBoxView: View {
     let node: TextNodesBox
 
     var body: some View {
-        node.nodes.compactMap { node -> Text? in
+        resolve(nodes: node.nodes)
+            .foregroundColor(Color.label)
+    }
+
+    func resolve(nodes: [ASTNode]) -> Text {
+        nodes.compactMap { node -> Text? in
             if let boldNode = node as? BoldNode {
                 return Text(boldNode.content).bold()
             } else if let cursiveNode = node as? CursiveNode {
@@ -18,10 +23,11 @@ struct CDTextBoxView: View {
                 return Text(codeNode.content).foregroundColor(Color.gray)
             } else if let textNode = node as? TextNode {
                 return Text(textNode.content)
+            } else if let textBoxNode = node as? TextNodesBox {
+                return resolve(nodes: textBoxNode.nodes)
             }
             return nil
         }.reduce(Text(""), +)
-        .foregroundColor(Color.label)
     }
 }
 
