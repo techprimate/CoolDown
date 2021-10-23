@@ -8,10 +8,14 @@ struct CDImageView: View {
 
     var body: some View {
         VStack {
-            KFImage(URL(string: node.uri))
-                .resizable()
-                .cornerRadius(15)
-                .aspectRatio(contentMode: .fit)
+            if #available(iOS 14.0, *) {
+                KFImage(URL(string: node.uri))
+                    .resizable()
+                    .cornerRadius(15)
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                Text("CDImageView is only available in iOS 14+")
+            }
             if let title = node.title {
                 Text(title)
                     .font(.caption)
