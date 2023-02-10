@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 
 import PackageDescription
 
@@ -14,34 +14,34 @@ let package = Package(
         .library(name: "CoolDownSwiftUIMapper", targets: ["CoolDownSwiftUIMapper"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "2.2.0")),
-        .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "8.0.7")),
-        .package(url: "https://github.com/onevcat/Kingfisher", .upToNextMajor(from: "7.1.1")),
+        //dev .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "2.2.0")),
+        //dev .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "8.0.7")),
+        .package(url: "https://github.com/onevcat/Kingfisher", .upToNextMajor(from: "7.6.0")),
         .package(url: "https://github.com/philprime/Rainbow", .upToNextMajor(from: "0.0.4"))
     ],
     targets: [
         .target(name: "CoolDownParser"),
-        .testTarget(name: "CoolDownParserTests", dependencies: [
-            "CoolDownParser",
-            "Quick",
-            "Nimble"
-        ]),
+        //dev .testTarget(name: "CoolDownParserTests", dependencies: [
+        //dev     "CoolDownParser",
+        //dev     "Quick",
+        //dev     "Nimble"
+        //dev ]),
         .target(name: "CoolDownAttributedString", dependencies: [
             "CoolDownParser"
         ]),
-        .testTarget(name: "CoolDownAttributedStringTests", dependencies: [
-            "CoolDownAttributedString",
-            "Quick",
-            "Nimble"
-        ]),
+        //dev .testTarget(name: "CoolDownAttributedStringTests", dependencies: [
+        //dev     "CoolDownAttributedString",
+        //dev     "Quick",
+        //dev     "Nimble"
+        //dev ]),
         .target(name: "CoolDownUIMapper", dependencies: [
             "CoolDownParser"
         ]),
-        .testTarget(name: "CoolDownUIMapperTests", dependencies: [
-            "CoolDownUIMapper",
-            "Quick",
-            "Nimble"
-        ]),
+        //dev .testTarget(name: "CoolDownUIMapperTests", dependencies: [
+        //dev     "CoolDownUIMapper",
+        //dev     "Quick",
+        //dev     "Nimble"
+        //dev ]),
         .target(name: "CoolDownSwiftUIMapper", dependencies: [
             "CoolDownParser",
             "Kingfisher",
